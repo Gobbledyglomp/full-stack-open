@@ -33,6 +33,9 @@
 </h2>
 
 <h3>
+    <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part1/">
+        • Part 1: Introduction to React
+    </a>
     <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part0/">
         • Part 0: Fundamentals of Web apps
     </a>
