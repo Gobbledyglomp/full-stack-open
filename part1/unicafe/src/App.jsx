@@ -6,15 +6,25 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const Feedback = ({ text, value }) => <>{text} {value}<br /></>
 
-const Statistics = ({ good, neutral, bad, all, average, positive }) => 
-  <div>
-    <Feedback text="good" value={good} />
-    <Feedback text="neutral" value={neutral} />
-    <Feedback text="bad" value={bad} />
-    <Feedback text="all" value={all} />
-    <Feedback text="average" value={average} />
-    <Feedback text="positive" value={positive} />
-  </div>
+const Statistics = ({ good, neutral, bad, all, average, positive }) => {
+  if (all === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }  
+  return (
+    <div>
+      <Feedback text="good" value={good} />
+      <Feedback text="neutral" value={neutral} />
+      <Feedback text="bad" value={bad} />
+      <Feedback text="all" value={all} />
+      <Feedback text="average" value={average} />
+      <Feedback text="positive" value={positive} />
+    </div>
+  )
+}
 
 const App = () => {
   const [good, setGood] = useState(0)
