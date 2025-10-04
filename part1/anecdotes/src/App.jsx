@@ -1,14 +1,32 @@
 import { useState } from 'react'
 
-const Votes = ({ value }) =>
-  <p>
-    Votes: {value}
-  </p>
-
-const Anecdote = ({ text }) =>
-  <p>
+const Header = ({ text }) =>
+  <h1>
     {text}
-  </p> 
+  </h1>
+
+const Anecdote = ({ anecdote, votes }) =>
+  <>
+    <p>
+      {anecdote}
+    </p>
+    <p>
+      Votes: {votes}
+    </p>
+  </>
+
+const BestAnecdote = ({ anecdote, votes }) => {
+  if (anecdote === null) {
+    return (
+      <p>
+        No votes have been received.
+      </p>
+    )
+  }
+  return (
+    <Anecdote anecdote={anecdote} votes={votes} />
+  )
+}
 
 const Button = ({ onClick, text }) =>
   <button onClick={onClick}>
@@ -42,13 +60,45 @@ const App = () => {
     setSelected(randomInt)
   }
 
+  const getAnecdote = index => {
+    if (index === -1) {
+      return null
+    }
+    return anecdotes[index]
+  }
+
+  const getBest = votes => {
+    let best = { index: -1, votes: 0 }
+
+    for (let i = 0; i < votes.length; i++) {
+      if (votes[i] > best.votes) {
+        best = { index: i, votes: votes[i] }
+      }
+    }
+
+    return best.index
+  }
+
+  const best = getBest(votes)
+
   return (
     <>
-      <Anecdote text={anecdotes[selected]} />
-      <Votes value={votes[selected]} />
-      
-      <Button onClick={() => voteAnecdote(selected)} text="Vote" />
-      <Button onClick={selectRandom} text="Random" />
+      <div>
+        <Header text="Anecdote of the day" />
+        <Anecdote
+          anecdote={getAnecdote(selected)}
+          votes={votes[selected]}
+        />        
+        <Button onClick={() => voteAnecdote(selected)} text="Vote" />
+        <Button onClick={selectRandom} text="Random" />
+      </div>
+      <div>
+        <Header text="Anecdote with most votes" />
+        <BestAnecdote
+          anecdote={getAnecdote(best)}
+          votes={votes[best]}
+        />
+      </div>
     </>
   )
 }
