@@ -4,7 +4,17 @@ const Header = ({ text }) => <h1>{text}</h1>
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const Statistics = ({ text, value }) => <>{text} {value}<br /></>
+const Feedback = ({ text, value }) => <>{text} {value}<br /></>
+
+const Statistics = ({ good, neutral, bad, all, average, positive }) => 
+  <div>
+    <Feedback text="good" value={good} />
+    <Feedback text="neutral" value={neutral} />
+    <Feedback text="bad" value={bad} />
+    <Feedback text="all" value={all} />
+    <Feedback text="average" value={average} />
+    <Feedback text="positive" value={positive} />
+  </div>
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -23,20 +33,20 @@ const App = () => {
     <>
       <div>
         <Header text="give feedback" />
-        
         <Button onClick={increaseGood} text="good" />
         <Button onClick={increaseNeutral} text="neutral" />
         <Button onClick={increaseBad} text="bad" /> 
       </div>
       <div>
         <Header text="statistics" />
-
-        <Statistics text="good" value={good} />
-        <Statistics text="neutral" value={neutral} />
-        <Statistics text="bad" value={bad} />
-        <Statistics text="all" value={all} />
-        <Statistics text="average" value={average} />
-        <Statistics text="positive" value={positivePercentage} />
+        <Statistics 
+          good={good} 
+          neutral={neutral}
+          bad={bad}
+          all={all}
+          average={average}
+          positive={positivePercentage}
+        />
       </div>
     </>
   )
