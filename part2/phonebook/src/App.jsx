@@ -1,20 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import FilterNumbers from './components/FilterNumbers'
 import FilterForm from './components/FilterForm'
 import PersonForm from './components/PersonForm'
 
 const App = () => {
-  // States
-  const [persons, setPersons] = useState([
-    { id: 1, name: 'Arto Hellas', number: '040-123456' },
-    { id: 2, name: 'Ada Lovelace', number: '39-44-5323523' },
-    { id: 3, name: 'Dan Abramov', number: '12-43-234345' },
-    { id: 4, name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  // State hooks
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   
+  // Effect hook: Get persons from server
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
+
   // Functions
   const handleNameInput = event => setNewName(event.target.value)
   const handleNumberInput = event => setNewNumber(event.target.value)
@@ -24,9 +29,9 @@ const App = () => {
     event.preventDefault()
 
     const newPerson = {
-      id: persons.length + 1,
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons.length + 1
     }
 
     if (persons.find(person => person.name === newName) === undefined) {
