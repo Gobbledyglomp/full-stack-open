@@ -1,39 +1,5 @@
-// Subcomponents
-const Header = ({ text }) => <h1>{text}</h1>
-
-const Subheader = ({ text }) => <h2>{text}</h2>
-
-const Content = ({ parts }) => (
-  <div>
-    {parts.map(part => <Part key={part.id} part={part} />)}
-  </div>
-)
-
-const Part = ({ part }) => (
-  <p>
-    {part.name} {part.exercises}
-  </p>
-)
-
-const Total = ({ total }) => (
-  <p>
-    <b>total of {total} exercises</b>
-  </p>
-)
-
-// Course
-const Course = ({ course }) => (
-  <div>
-    <Subheader text={course.name} />
-    <Content parts={course.parts} />
-    <Total total={
-      course.parts.reduce(
-        (total, currentPart) => total + currentPart.exercises,
-        0,
-      )
-    } />
-  </div>
-)
+import Course from './components/Course'
+import { Header } from './components/Headers'
 
 // App
 const App = () => {
