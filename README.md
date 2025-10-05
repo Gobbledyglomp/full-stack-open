@@ -14,6 +14,7 @@
     <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
     <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white">
     <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
+    <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
     <img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white">
     <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white">
     <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white">
@@ -33,12 +34,21 @@
 </h2>
 
 <h3>
-    <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part1/">
-        • Part 1: Introduction to React
-    </a><br><br>
-    <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part0/">
-        • Part 0: Fundamentals of Web apps
-    </a>
+    <p>
+        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part2">
+            • Part 2: Communicating with server
+        </a>
+    </p>
+    <p>
+        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part1/">
+            • Part 1: Introduction to React
+        </a>
+    </p>
+    <p>
+        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part0/">
+            • Part 0: Fundamentals of Web apps
+        </a>
+    </p>
 </h3>
 
 <h2>
