@@ -1,25 +1,7 @@
 import { useState } from 'react'
-
-const Numbers = ({ persons }) => {
-  return (
-    <div>
-      {persons.map(person =>
-        <div key={person.name}>
-          {person.name} {person.number}
-        </div>
-      )}
-    </div>
-  )
-}
-
-const FilterNumbers = ({ persons, filter }) => {
-  if (filter === '') {
-    return <Numbers persons={persons} />
-  }
-  return <Numbers persons={persons.filter(person =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  )} />
-}
+import FilterNumbers from './components/FilterNumbers'
+import FilterForm from './components/FilterForm'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   // States
@@ -59,37 +41,26 @@ const App = () => {
 
   // Return
   return (
-    <div>
+    <>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with: <input 
-            value={newFilter}
-            onChange={handleFilterInput}
-          />
-        </div>
-      </form>
-      <h2>add a new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={handleNameInput}
-          />
-        </div>
-        <div>
-          number: <input 
-            value={newNumber}
-            onChange={handleNumberInput}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <FilterNumbers persons={persons} filter={newFilter} />
-    </div>
+      <FilterForm
+        value={newFilter} 
+        onChange={handleFilterInput} 
+      />
+
+      <h3>Add a new</h3>
+      <PersonForm 
+        onSubmit={handleSubmit}
+        name={{ value: newName, onChange: handleNameInput }}
+        number={{ value: newNumber, onChange: handleNumberInput }}
+      />
+
+      <h3>Numbers</h3>
+      <FilterNumbers
+        persons={persons}
+        filter={newFilter}
+      />
+    </>
   )
 }
 
