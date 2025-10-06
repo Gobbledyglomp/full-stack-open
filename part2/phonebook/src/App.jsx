@@ -47,6 +47,19 @@ const App = () => {
     }
   }
 
+  const handleDeletion = (event, person) => {
+    event.preventDefault()
+
+    const canDelete = confirm(`Delete ${person.name}?`)
+    if (canDelete) {
+      personService
+        .remove(person)
+        .then(deleted => {
+          setPersons(persons.filter(person => person.id !== deleted.id))
+        })
+    }
+  }
+
   // Return
   return (
     <>
@@ -67,6 +80,7 @@ const App = () => {
       <FilterNumbers
         persons={persons}
         filter={newFilter}
+        onDelete={handleDeletion}
       />
     </>
   )
