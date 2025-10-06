@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import FilterNumbers from './components/FilterNumbers'
 import FilterForm from './components/FilterForm'
 import PersonForm from './components/PersonForm'
+import personService from './services/persons'
 
 const App = () => {
   // State hooks
@@ -13,10 +13,10 @@ const App = () => {
   
   // Effect hook: Get persons from server
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService
+      .get()
+      .then(persons => {
+        setPersons(persons)
       })
   }, [])
 
@@ -34,14 +34,13 @@ const App = () => {
     }
 
     if (persons.find(person => person.name === newName) === undefined) {
-      axios
-        .post('http://localhost:3001/persons', newPerson)
-        .then(response => {
-          console.log(response)
-          setPersons(persons.concat(response.data))
+      personService
+        .create(newPerson)
+        .then(person => {
+          setPersons(persons.concat(person))
           setNewName('')
           setNewNumber('')
-        })      
+        })
     } 
     else {
       alert(`${newName} is already added to phonebook`)
