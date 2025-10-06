@@ -33,17 +33,31 @@ const App = () => {
       number: newNumber
     }
 
-    if (persons.find(person => person.name === newName) === undefined) {
+    const duplicate = persons.find(person => person.name === newName)
+    if (duplicate === undefined) {
       personService
         .create(newPerson)
-        .then(person => {
-          setPersons(persons.concat(person))
+        .then(added => {
+          setPersons(persons.concat(added))
           setNewName('')
           setNewNumber('')
         })
     } 
     else {
-      alert(`${newName} is already added to phonebook`)
+      const canChange = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      if (canChange) {
+        newPerson.id = duplicate.id
+
+        personService
+          .update(newPerson)
+          .then(updated => {
+            setPersons(persons.map(person => 
+              person.id === updated.id
+                ? updated
+                : person
+            ))
+          })
+      }
     }
   }
 
