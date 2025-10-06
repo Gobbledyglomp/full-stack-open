@@ -30,14 +30,18 @@ const App = () => {
 
     const newPerson = {
       name: newName,
-      number: newNumber,
-      id: persons.length + 1
+      number: newNumber
     }
 
     if (persons.find(person => person.name === newName) === undefined) {
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-      setNewNumber('')
+      axios
+        .post('http://localhost:3001/persons', newPerson)
+        .then(response => {
+          console.log(response)
+          setPersons(persons.concat(newPerson))
+          setNewName('')
+          setNewNumber('')
+        })      
     } 
     else {
       alert(`${newName} is already added to phonebook`)
