@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import FilterNumbers from './components/FilterNumbers'
 import FilterForm from './components/FilterForm'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -10,7 +11,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
-  
+  const [message, setMessage] = useState(null)
+
   // Effect hook: Get persons from server
   useEffect(() => {
     personService
@@ -38,6 +40,11 @@ const App = () => {
       personService
         .create(newPerson)
         .then(added => {
+          setMessage(`Added ${added.name}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
+
           setPersons(persons.concat(added))
           setNewName('')
           setNewNumber('')
@@ -51,6 +58,11 @@ const App = () => {
         personService
           .update(newPerson)
           .then(updated => {
+            setMessage(`${updated.name}'s number was changed`)
+            setTimeout(() => {
+              setMessage(null)
+            }, 3000)
+
             setPersons(persons.map(person => 
               person.id === updated.id
                 ? updated
@@ -78,6 +90,7 @@ const App = () => {
   return (
     <>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <FilterForm
         value={newFilter} 
         onChange={handleFilterInput} 
