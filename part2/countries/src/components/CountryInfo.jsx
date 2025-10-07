@@ -27,7 +27,8 @@ const Languages = ({ languages }) => (
 
 const Flag = ({ data }) => {
     const style = {
-        'boxShadow': '5px 5px 15px 15px rgba(0, 0, 0, 0.1)'
+        'boxShadow': '5px 5px 15px 15px rgba(0, 0, 0, 0.1)',
+        'height': '150px'
     }
 
     return (

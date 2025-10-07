@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react'
 import CountryInfo from './CountryInfo'
+import ListResult from './ListResult'
 import countryService from '../services/countries'
 
-const ListResult = ({ list }) => (
-    <div>
-        {list.map(country => 
-            <div key={country}>{country}</div>
-        )}
-    </div>
-)
-
-const Result = ({ list }) => {
+const Result = ({ list, onShowClick }) => {
     const [currentCountry, setCurrentCountry]  =  useState(null)
     const [countryData, setCountryData] = useState(null)
 
@@ -36,7 +29,10 @@ const Result = ({ list }) => {
         )
     } else if (list.length !== 1) {
         return (
-            <ListResult list={list} />
+            <ListResult 
+                list={list}
+                onClick={onShowClick} 
+            />
         )
     } 
 
