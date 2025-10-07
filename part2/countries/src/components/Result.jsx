@@ -4,17 +4,37 @@ import ListResult from './ListResult'
 import countryService from '../services/countries'
 
 const Result = ({ list, onShowClick }) => {
-    const [currentCountry, setCurrentCountry]  =  useState(null)
+    //
+    // State hooks
+    //
+    const [currentCountry, setCurrentCountry] = useState(null)
     const [countryData, setCountryData] = useState(null)
+    const [weatherData, setWeatherData] = useState(null)
 
+    //
+    // Effect hooks
+    //
     useEffect(() => {
         if (currentCountry !== null) {
             countryService
                 .getCountry(currentCountry)
-                .then(data => setCountryData(data))
+                .then(data => {
+                    setCountryData(data)
+                    return data.capitalInfo.latlng
+                })
+                .then(coords => {
+                    countryService
+                        .getWeather(coords)
+                        .then(data => setWeatherData(data))
+                        .catch(error => console.log(error.message))
+                })
+                .catch(error => console.log(error.message))
         }
     }, [currentCountry])
 
+    //
+    // Conditional rendering
+    //
     if (list === null || list.length > 10) {
         return (
             <div>
@@ -34,18 +54,20 @@ const Result = ({ list, onShowClick }) => {
                 onClick={onShowClick} 
             />
         )
-    } 
+    } else {
+        if (currentCountry !== list[0]) {
+            setCurrentCountry(list[0])
+        }
 
-    if (currentCountry !== list[0]) {
-        setCurrentCountry(list[0])
+        if (countryData !== null && countryData.name.common === currentCountry) {
+            return (
+                <CountryInfo 
+                    countryData={countryData}
+                    weatherData={weatherData}
+                />
+            )
+        }
     }
-
-    if (countryData !== null && countryData.name.common === currentCountry) {
-        return (
-            <CountryInfo data={countryData} />
-        )
-    }
-
     return (
         <div>
             Loading...

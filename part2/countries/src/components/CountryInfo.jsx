@@ -42,14 +42,39 @@ const Flag = ({ data }) => {
     )
 }
 
-const CountryInfo = ({ data }) => {
+const Weather = ({ weatherData, countryData }) => {
+    if (weatherData !== null && weatherData.sys.country === countryData.cca2) {
+        return (
+            <div>
+                <h2>Weather in {countryData.capital}</h2>
+                <p>
+                    Temperature: {(weatherData.main.temp - 272.15).toFixed(2)} Celsius
+                </p>
+                <img 
+                    src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                    alt={weatherData.weather[0].description}
+                />
+                <p>
+                    Wind: {weatherData.wind.speed} m/s
+                </p>
+            </div>
+        )
+    }
+
     return (
         <div>
-            <MainInfo data={data} />
-            <Languages languages={data.languages} />
-            <Flag data={data} />
+            Loading...
         </div>
     )
 }
+
+const CountryInfo = ({ countryData, weatherData }) => (
+    <div>
+        <MainInfo data={countryData} />
+        <Languages languages={countryData.languages} />
+        <Flag data={countryData} />
+        <Weather weatherData={weatherData} countryData={countryData} />
+    </div>
+)
 
 export default CountryInfo
