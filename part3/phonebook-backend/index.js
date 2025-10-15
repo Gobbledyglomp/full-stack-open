@@ -28,8 +28,18 @@ const persons = [
 //
 // GET
 //
-app.get('/api/persons', (req, res) => {
+app.get('/info', (req, res) => {
+    const now = new Date()
+    
     console.log('Received GET request')
+    
+    res.send(`
+        <p>Phonebook has info for ${persons.length} people</p>
+        <p>${now}</p>
+    `)
+})
+
+app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
