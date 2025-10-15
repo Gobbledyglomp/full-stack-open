@@ -26,22 +26,37 @@ const persons = [
 ]
 
 //
-// GET
+// Persons API
+//
+app.get('/api/persons', (req, res) => {
+    res.json(persons)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+    const id = req.params.id
+    const person = persons.find(person => person.id === id)
+    
+    if (person) {
+        res.json(person)
+    } else {
+        res.status(404).json({
+            error: `Person ${id} was not found`
+        })
+    }
+})
+
+//
+// Info
 //
 app.get('/info', (req, res) => {
     const now = new Date()
-    
-    console.log('Received GET request')
-    
+
     res.send(`
         <p>Phonebook has info for ${persons.length} people</p>
         <p>${now}</p>
     `)
 })
 
-app.get('/api/persons', (req, res) => {
-    res.json(persons)
-})
 
 // Port listening
 const PORT = 3001
