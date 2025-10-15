@@ -59,14 +59,26 @@ app.post('/api/persons', (req, res) => {
 
     if (!body.name) {
         return res.status(400).json({
-            error: 'Name cannot be empty'
+            error: 'Name is missing'
+        })
+    }
+    
+    if (!body.number) {
+        return res.status(400).json({
+            error: 'Number is missing'
+        })
+    }
+
+    if (persons.find(person => person.name === body.name)) {
+        return res.status(400).json({
+            error: 'Name must be unique'
         })
     }
 
     const person = {
         id: `${generateID()}`,
         name: body.name,
-        number: body.number || null
+        number: body.number
     }
     persons = persons.concat(person)
 
