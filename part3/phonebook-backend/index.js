@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 // Data
 let persons = [
     { 
@@ -45,6 +47,30 @@ app.get('/api/persons/:id', (req, res) => {
             error: `Person ${id} was not found`
         })
     }
+})
+
+// POST
+const generateID = () => Math.ceil(
+    Math.random() * 1000000000000000
+)
+
+app.post('/api/persons', (req, res) => {
+    const body = req.body
+
+    if (!body.name) {
+        return res.status(400).json({
+            error: 'Name cannot be empty'
+        })
+    }
+
+    const person = {
+        id: `${generateID()}`,
+        name: body.name,
+        number: body.number || null
+    }
+    persons = persons.concat(person)
+
+    res.status(201).json(person)
 })
 
 // DELETE
