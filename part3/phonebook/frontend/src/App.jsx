@@ -108,15 +108,15 @@ const App = () => {
   }
 
   // Handle deletion of a person
-  const handleDeletion = (event, person) => {
+  const handleDeletion = (event, toBeDeleted) => {
     event.preventDefault()
 
-    const canDelete = confirm(`Delete ${person.name}?`)
+    const canDelete = confirm(`Delete ${toBeDeleted.name}?`)
     if (canDelete) {
       personService
-        .remove(person)
-        .then(deleted => {
-          setPersons(persons.filter(person => person.id !== deleted.id))
+        .remove(toBeDeleted)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== toBeDeleted.id))
         })
     }
   }
