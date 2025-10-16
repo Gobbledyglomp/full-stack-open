@@ -12,6 +12,18 @@
 </p>
 
 <h2>
+    Repo
+</h2>
+
+<h3>
+    <p>
+        <a href="https://github.com/Gobbledyglomp/full-stack-open-phonebook">
+            https://github.com/Gobbledyglomp/full-stack-open-phonebook
+        </a>
+    </p>
+</h3>
+
+<h2>
     Link to deployed app
 </h2>
 
