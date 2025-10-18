@@ -10,3 +10,25 @@
         </a>
     </i>
 </p>
+
+<h2>
+    Phonebook exercise
+</h2>
+
+<h3>
+    <p>
+        Repo:
+        <a href="https://github.com/Gobbledyglomp/full-stack-open-phonebook">
+            https://github.com/Gobbledyglomp/full-stack-open-phonebook
+        </a>
+    </p>
+</h3>
+
+<h3>
+    <p>
+        App:
+        <a href="https://full-stack-open-phonebook-bkyp.onrender.com">
+            https://full-stack-open-phonebook-bkyp.onrender.com
+        </a>
+    </p>
+</h3>

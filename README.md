@@ -9,14 +9,19 @@
 </h1>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
-    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+    <img src="https://img.shields.io/badge/html-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
+    <img src="https://img.shields.io/badge/CSS-673398?style=for-the-badge&logo=css&logoColor=white">
     <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
     <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white">
     <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
     <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
-    <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white">
     <img src="https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white">
+    <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white">
+    <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white">
+    <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
+    <img src="https://img.shields.io/badge/Render-000000?style=for-the-badge&logo=render&logoColor=white">
+    <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white">
+    <img src="https://img.shields.io/badge/Mongoose-800?style=for-the-badge&logo=mongoose&logoColor=white">
 </p>
 
 <h2>
@@ -32,6 +37,11 @@
 </h2>
 
 <h3>
+    <p>
+        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part4">
+            • Part 4: Testing Express servers, user administration
+        </a>
+    </p>
     <p>
         <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part3">
             • Part 3: Programming a server with NodeJS and Express
