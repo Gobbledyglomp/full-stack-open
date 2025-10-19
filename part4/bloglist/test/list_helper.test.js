@@ -11,7 +11,7 @@ test('dummy returns one', () => {
 
 describe('total likes', () => {
     //
-    // Insert Data
+    // Insert data
     //
     const emptyList = []
     const listWithOneBlog = [
@@ -26,27 +26,51 @@ describe('total likes', () => {
     ]
     const listWithManyBlogs = [
         {
-            _id: '68f4cb6b549656bd5bd31754',
-            title: '10 Tips for Effective SEO',
-            author: 'John Smith',
-            url: 'https://www.example.com/10-tips-for-seo',
-            likes: 398,
+            _id: '5a422a851b54a676234d17f7',
+            title: 'React patterns',
+            author: 'Michael Chan',
+            url: 'https://reactpatterns.com/',
+            likes: 7,
             __v: 0
         },
         {
-            _id: '68f4cb9c549656bd5bd31757',
-            title: 'Understanding JavaScript Closures',
-            author: 'Emily Johnson',
-            url: 'https://www.example.com/javascript-closures',
-            likes: 102,
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 5,
             __v: 0
         },
         {
-            _id: '68f4e26fcae0948ea656f27d',
-            title: 'A Guide to Responsive Design',
-            author: 'Michael Brown',
-            url: 'https://www.example.com/responsive-design-guide',
-            likes: 487,
+            _id: '5a422b3a1b54a676234d17f9',
+            title: 'Canonical string reduction',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+            likes: 12,
+            __v: 0
+        },
+        {
+            _id: '5a422b891b54a676234d17fa',
+            title: 'First class tests',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+            likes: 10,
+            __v: 0
+        },
+        {
+            _id: '5a422ba71b54a676234d17fb',
+            title: 'TDD harms architecture',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422bc61b54a676234d17fc',
+            title: 'Type wars',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+            likes: 2,
             __v: 0
         }
     ]
@@ -66,6 +90,165 @@ describe('total likes', () => {
 
     test('of a bigger list is calculated right', () => {
         const result = listHelper.totalLikes(listWithManyBlogs)
-        assert.strictEqual(result, 987)
+        assert.strictEqual(result, 36)
+    })
+})
+
+describe('favorite blog', () => {
+    //
+    // Insert data
+    //
+    const emptyList = []
+    const listWithOneBlog = [
+        {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+            likes: 5,
+            __v: 0
+        }
+    ]
+    const listWithManyBlogs = [
+        {
+            _id: '5a422a851b54a676234d17f7',
+            title: 'React patterns',
+            author: 'Michael Chan',
+            url: 'https://reactpatterns.com/',
+            likes: 7,
+            __v: 0
+        },
+        {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 5,
+            __v: 0
+        },
+        {
+            _id: '5a422b3a1b54a676234d17f9',
+            title: 'Canonical string reduction',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+            likes: 12,
+            __v: 0
+        },
+        {
+            _id: '5a422b891b54a676234d17fa',
+            title: 'First class tests',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+            likes: 10,
+            __v: 0
+        },
+        {
+            _id: '5a422ba71b54a676234d17fb',
+            title: 'TDD harms architecture',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422bc61b54a676234d17fc',
+            title: 'Type wars',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+            likes: 2,
+            __v: 0
+        }
+    ]
+    const listWithManyBlogsWithZeroLikes = [
+        {
+            _id: '5a422a851b54a676234d17f7',
+            title: 'React patterns',
+            author: 'Michael Chan',
+            url: 'https://reactpatterns.com/',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422b3a1b54a676234d17f9',
+            title: 'Canonical string reduction',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422b891b54a676234d17fa',
+            title: 'First class tests',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422ba71b54a676234d17fb',
+            title: 'TDD harms architecture',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+            likes: 0,
+            __v: 0
+        },
+        {
+            _id: '5a422bc61b54a676234d17fc',
+            title: 'Type wars',
+            author: 'Robert C. Martin',
+            url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+            likes: 0,
+            __v: 0
+        }
+    ]
+
+    //
+    // Tests
+    //
+    test('of empty list is null', () => {
+        const result = listHelper.favoriteBlog(emptyList)
+        assert.strictEqual(result, null)
+    })
+
+    test('in the list with one blog is the blog itself', () => {
+        const result = listHelper.favoriteBlog(listWithOneBlog)
+        const expectedResult = {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+            likes: 5,
+            __v: 0
+        }
+
+        assert.deepStrictEqual(result, expectedResult)
+    })
+
+    test('of a bigger list is the right blog', () => {
+        const result = listHelper.favoriteBlog(listWithManyBlogs)
+        const expectedResult = {
+            _id: '5a422b3a1b54a676234d17f9',
+            title: 'Canonical string reduction',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+            likes: 12,
+            __v: 0
+        }
+
+        assert.deepStrictEqual(result, expectedResult)
+    })
+
+    test('of a bigger list, where all blogs have 0 likes, is a post with 0 likes', () => {
+        const result = listHelper.favoriteBlog(listWithManyBlogsWithZeroLikes)
+
+        assert.strictEqual(result.likes, 0)
     })
 })
