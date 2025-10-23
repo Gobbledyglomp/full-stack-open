@@ -16,7 +16,12 @@ const initialBlogs = [
 ]
 
 const randomId = async () => {
-    const blog = new Blog()
+    const blog = new Blog({
+        'title': 'TO BE DELETED',
+        'author': 'TO BE DELETED',
+        'url': 'TO BE DELETED'
+    })
+
     await blog.save()
     await blog.deleteOne()
 
