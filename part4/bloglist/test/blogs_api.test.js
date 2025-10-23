@@ -112,6 +112,92 @@ describe('when there are initially some blogs saved', () => {
         })
     })
 
+    describe('PUT', () => {
+        test('all fields of blog are updated with valid data', async () => {
+            const update = {
+                title: 'Updated',
+                author: 'Updated',
+                url: 'Updated',
+                likes: 9999
+            }
+
+            const initialBlogs = await helper.blogsInDb()
+            const blogToUpdate = initialBlogs[0]
+
+            await api
+                .put(`/api/blogs/${blogToUpdate.id}`)
+                .send(update)
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            const updatedBlog = await helper.blogById(blogToUpdate.id)
+
+            for (const property in update) {
+                //console.log(`[${property}]: ${updatedBlog[property]}, ${updatedData[property]}`)
+                assert.strictEqual(updatedBlog[property], update[property])
+            }
+        })
+
+        test('only requested fields of blog are updated', async () => {
+            const update = {
+                url: 'Updated',
+                likes: 9999
+            }
+
+            const initialBlogs = await helper.blogsInDb()
+            const blogToUpdate = initialBlogs[0]
+
+            await api
+                .put(`/api/blogs/${blogToUpdate.id}`)
+                .send(update)
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            const updatedBlog = await helper.blogById(blogToUpdate.id)
+
+            for (const property in blogToUpdate) {
+                if (property in update) {
+                    assert.strictEqual(updatedBlog[property], update[property])
+                } else {
+                    assert.strictEqual(updatedBlog[property], blogToUpdate[property])
+                }                
+            }
+        })
+
+        test('blog is not updated when sent empty object', async () => {
+            const initialBlogs = await helper.blogsInDb()
+            const blogToUpdate = initialBlogs[0]
+
+            await api
+                .put(`/api/blogs/${blogToUpdate.id}`)
+                .send({})
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            const updatedBlog = await helper.blogById(blogToUpdate.id)
+
+            for (const property in updatedBlog) {
+                assert.strictEqual(updatedBlog[property], blogToUpdate[property])               
+            }
+        })
+
+        test('trying to update nonexistent blog returns status code 404', async () => {
+            const updatedData = {
+                title: 'Updated',
+                author: 'Updated',
+                url: 'Updated',
+                likes: 9999
+            }
+
+            const nonexistentId = await helper.randomId()
+
+            await api
+                .put(`/api/blogs/${nonexistentId}`)
+                .send(updatedData)
+                .expect(404)
+        })
+    })
+
     describe('DELETE', () => {
         test('blog is deleted with status code 204', async () => {
             const initialBlogs = await helper.blogsInDb()
@@ -120,14 +206,24 @@ describe('when there are initially some blogs saved', () => {
             await api
                 .delete(`/api/blogs/${blogToDelete.id}`)
                 .expect(204)
+            
+            const blogsAtEnd = await helper.blogsInDb()
+            const ids = blogsAtEnd.map(blog => blog.id)
+
+            assert(!ids.includes(blogToDelete.id))
         })
 
-        test('trying to delete nonexistent blog gives status code 404', async () => {
-            const invalidId = await helper.randomId()
+        test('trying to delete nonexistent blog returns status code 404', async () => {
+            const initialBlogs = await helper.blogsInDb()
+            const nonexistentId = await helper.randomId()
 
             await api
-                .delete(`/api/blogs/${invalidId}`)
+                .delete(`/api/blogs/${nonexistentId}`)
                 .expect(404)
+
+            const blogsAtEnd = await helper.blogsInDb()
+
+            assert.strictEqual(initialBlogs.length, blogsAtEnd.length)
         })
     })
 })

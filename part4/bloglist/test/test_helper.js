@@ -34,7 +34,8 @@ const blogsInDb = async () => {
 }
 
 const blogById = async id => {
-    return await Blog.findById(id)
+    const blog = await Blog.findById(id)
+    return blog.toJSON()
 }
 
 module.exports = {
