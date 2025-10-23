@@ -61,7 +61,7 @@ test('valid blog is added', async () => {
     assert.strictEqual(addedBlog.likes, newBlog.likes)
 })
 
-test('blog without the like field gets a value of 0', async () => {
+test('blog without like field gets a value of 0', async () => {
     const newBlog = {
         title: 'Canonical string reduction',
         author: 'Edsger W. Dijkstra',
@@ -79,6 +79,32 @@ test('blog without the like field gets a value of 0', async () => {
         blog.title === newBlog.title && blog.author === newBlog.author)
 
     assert.strictEqual(addedBlog.likes, 0)
+})
+
+test('blog without title field receives status code 400', async () => {
+    const newBlog = {
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+        likes: 12
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+})
+
+test('blog without url field receives status code 400', async () => {
+    const newBlog = {
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        likes: 12
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
 })
 
 after(async () => {
