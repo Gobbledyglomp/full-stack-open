@@ -60,6 +60,26 @@ test('valid blog is added', async () => {
     assert(authors.includes(newBlog.author))
 })
 
+test('blog without the like field gets a value of 0', async () => {
+    const newBlog = {
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAfterAdding = await helper.blogsInDb()
+    const addedBlog = blogsAfterAdding.find(blog =>
+        blog.title === newBlog.title && blog.author === newBlog.author)
+
+    assert.strictEqual(addedBlog.likes, 0)
+})
+
 after(async () => {
     await mongoose.connection.close()
 })

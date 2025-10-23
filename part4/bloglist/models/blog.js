@@ -13,7 +13,7 @@ blogSchema.set('toJSON', {
         title: returnedObject.title,
         author: returnedObject.author,
         url: returnedObject.url,
-        likes: returnedObject.likes
+        likes: returnedObject.likes || 0
     })
 })
 
