@@ -4,7 +4,7 @@ const supertest = require('supertest')
 const mongoose = require('mongoose')
 
 const app = require('../app')
-const helper = require('./test_helper.test')
+const helper = require('./test_helper')
 const Blog = require('../models/blog')
 
 const api = supertest(app)
@@ -53,11 +53,12 @@ test('valid blog is added', async () => {
     const blogsAfterAdding = await helper.blogsInDb()
     assert.strictEqual(blogsAfterAdding.length, helper.initialBlogs.length + 1)
 
-    const titles = blogsAfterAdding.map(blog => blog.title)
-    const authors = blogsAfterAdding.map(blog => blog.author)
+    const addedBlog = blogsAfterAdding.find(blog => blog.title === newBlog.title)
 
-    assert(titles.includes(newBlog.title))
-    assert(authors.includes(newBlog.author))
+    assert.notStrictEqual(addedBlog, undefined)
+    assert.strictEqual(addedBlog.author, newBlog.author)
+    assert.strictEqual(addedBlog.url, newBlog.url)
+    assert.strictEqual(addedBlog.likes, newBlog.likes)
 })
 
 test('blog without the like field gets a value of 0', async () => {
