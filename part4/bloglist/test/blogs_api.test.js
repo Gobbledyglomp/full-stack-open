@@ -36,6 +36,30 @@ test('unique identifier property of blog is named id', async () => {
     })
 })
 
+test('valid blog is added', async () => {
+    const newBlog = {
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+        likes: 12
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAfterAdding = await helper.blogsInDb()
+    assert.strictEqual(blogsAfterAdding.length, helper.initialBlogs.length + 1)
+
+    const titles = blogsAfterAdding.map(blog => blog.title)
+    const authors = blogsAfterAdding.map(blog => blog.author)
+
+    assert(titles.includes(newBlog.title))
+    assert(authors.includes(newBlog.author))
+})
+
 after(async () => {
     await mongoose.connection.close()
 })
