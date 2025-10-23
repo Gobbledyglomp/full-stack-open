@@ -27,6 +27,15 @@ test('all blogs are returned as json', async () => {
     assert.strictEqual(response.body.length, helper.initialBlogs.length)
 })
 
+test('unique identifier property of blog is named id', async () => {
+    const blogs = await helper.blogsInDb()
+
+    blogs.forEach(blog => {
+        assert.notStrictEqual(blog.id, undefined)
+        assert.strictEqual(blog._id, undefined)
+    })
+})
+
 after(async () => {
     await mongoose.connection.close()
 })

@@ -28,8 +28,13 @@ const blogsInDb = async () => {
     return blogs.map(blog => blog.toJSON())
 }
 
+const blogById = async id => {
+    return await Blog.findById(id)
+}
+
 module.exports = {
     initialBlogs,
     randomId,
-    blogsInDb
+    blogsInDb,
+    blogById
 }
