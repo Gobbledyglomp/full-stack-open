@@ -12,40 +12,41 @@
     <img src="https://img.shields.io/badge/html-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
     <img src="https://img.shields.io/badge/CSS-673398?style=for-the-badge&logo=css&logoColor=white">
     <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
-    <a href="https://www.npmjs.com/">
+    <a href="https://www.npmjs.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white">
     </a>
-    <a href="https://vite.dev/">
+    <a href="https://vite.dev/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
     </a>
-    <a href="https://react.dev/">
+    <a href="https://react.dev/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
     </a>
-    <a href="https://axios-http.com/"> 
+    <a href="https://axios-http.com/" style="text-decoration: none;"> 
         <img src="https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white">
     </a>
-    <a href="https://nodejs.org/en">
+    <a href="https://nodejs.org/en" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white">
     </a>
-    <a href="https://expressjs.com/">
+    <a href="https://expressjs.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white">
     </a>
-    <a href="https://www.postman.com/">
+    <a href="https://www.postman.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
     </a>
-    <a href="https://render.com/">
+    <a href="https://render.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/Render-000000?style=for-the-badge&logo=render&logoColor=white">
     </a>
-    <a href="https://www.mongodb.com/">
+    <a href="https://www.mongodb.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white">
     </a>
-    <a href="https://mongoosejs.com/">
+    <a href="https://mongoosejs.com/" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/Mongoose-800?style=for-the-badge&logo=mongoose&logoColor=white">
     </a>
-    <a href="https://www.jwt.io/introduction#what-is-json-web-token">
+    <a href="https://www.jwt.io/introduction#what-is-json-web-token" style="text-decoration: none;">
         <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white">
     </a>
 </p>
+
 
 <h2>
     Info
