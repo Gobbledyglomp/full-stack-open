@@ -5,13 +5,18 @@ const mongoose = require('mongoose')
 
 const app = require('../app')
 const helper = require('./test_helper')
+
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const api = supertest(app)
 
 describe('when there are initially some blogs saved', () => {
     beforeEach(async () => {
         await Blog.deleteMany({})
+        await User.deleteMany({})
+
+        await User.insertMany(helper.initialUsers)
         await Blog.insertMany(helper.initialBlogs)
     })
 
@@ -48,8 +53,11 @@ describe('when there are initially some blogs saved', () => {
                 likes: 12
             }
 
+            const token = await helper.getToken('root', 'root')
+
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
                 .expect('Content-Type', /application\/json/)
@@ -72,8 +80,11 @@ describe('when there are initially some blogs saved', () => {
                 url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
             }
 
+            const token = await helper.getToken('root', 'root')
+
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
                 .expect('Content-Type', /application\/json/)
@@ -85,8 +96,41 @@ describe('when there are initially some blogs saved', () => {
             assert.strictEqual(addedBlog.likes, 0)
         })
 
-        test('blog without title field receives status code 400', async () => {
+        test('blog without title field fails with status code 400', async () => {
             const newBlog = {
+                author: 'Edsger W. Dijkstra',
+                url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+                likes: 12
+            }
+
+            const token = await helper.getToken('root', 'root')
+
+            await api
+                .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
+                .send(newBlog)
+                .expect(400)
+        })
+
+        test('blog without url field fails with status code 400', async () => {
+            const newBlog = {
+                title: 'Canonical string reduction',
+                author: 'Edsger W. Dijkstra',
+                likes: 12
+            }
+
+            const token = await helper.getToken('root', 'root')
+
+            await api
+                .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
+                .send(newBlog)
+                .expect(400)
+        })
+
+        test('blog without token fails with status code 401', async () => {
+            const newBlog = {
+                title: 'Canonical string reduction',
                 author: 'Edsger W. Dijkstra',
                 url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
                 likes: 12
@@ -95,20 +139,7 @@ describe('when there are initially some blogs saved', () => {
             await api
                 .post('/api/blogs')
                 .send(newBlog)
-                .expect(400)
-        })
-
-        test('blog without url field receives status code 400', async () => {
-            const newBlog = {
-                title: 'Canonical string reduction',
-                author: 'Edsger W. Dijkstra',
-                likes: 12
-            }
-
-            await api
-                .post('/api/blogs')
-                .send(newBlog)
-                .expect(400)
+                .expect(401)
         })
     })
 
@@ -157,9 +188,9 @@ describe('when there are initially some blogs saved', () => {
 
             for (const property in blogToUpdate) {
                 if (property in update) {
-                    assert.strictEqual(updatedBlog[property], update[property])
+                    assert.strictEqual(updatedBlog[property].toString(), update[property].toString())
                 } else {
-                    assert.strictEqual(updatedBlog[property], blogToUpdate[property])
+                    assert.strictEqual(updatedBlog[property].toString(), blogToUpdate[property].toString())
                 }                
             }
         })
@@ -177,7 +208,7 @@ describe('when there are initially some blogs saved', () => {
             const updatedBlog = await helper.blogById(blogToUpdate.id)
 
             for (const property in updatedBlog) {
-                assert.strictEqual(updatedBlog[property], blogToUpdate[property])               
+                assert.strictEqual(updatedBlog[property].toString(), blogToUpdate[property].toString())               
             }
         })
 
@@ -203,8 +234,11 @@ describe('when there are initially some blogs saved', () => {
             const initialBlogs = await helper.blogsInDb()
             const blogToDelete = initialBlogs[0]
             
+            const token = await helper.getToken('root', 'root')
+
             await api
                 .delete(`/api/blogs/${blogToDelete.id}`)
+                .set('Authorization', `Bearer ${token}`)
                 .expect(204)
             
             const blogsAtEnd = await helper.blogsInDb()
@@ -216,9 +250,12 @@ describe('when there are initially some blogs saved', () => {
         test('trying to delete nonexistent blog returns status code 404', async () => {
             const initialBlogs = await helper.blogsInDb()
             const nonexistentId = await helper.randomId()
+            
+            const token = await helper.getToken('root', 'root')
 
             await api
                 .delete(`/api/blogs/${nonexistentId}`)
+                .set('Authorization', `Bearer ${token}`)
                 .expect(404)
 
             const blogsAtEnd = await helper.blogsInDb()

@@ -26,6 +26,12 @@ blogsRouter.get('/:id', async (request, response) => {
 // POST
 //
 blogsRouter.post('/', userExtractor, async (request, response) => {
+    if (request.token === null) {
+        return response.status(401).json({
+            error: 'missing token'
+        })
+    }
+
     const user = request.user
     if (!user) {
         return response.status(400).json({
@@ -63,6 +69,12 @@ blogsRouter.put('/:id', async (request, response) => {
 
 // DELETE
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
+    if (request.token === null) {
+        return response.status(401).json({
+            error: 'missing token'
+        })
+    }
+
     const blog = await Blog.findById(request.params.id)
     if (!blog) {
         return response.status(404).json({

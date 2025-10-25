@@ -35,9 +35,9 @@ usersRouter.post('/', async (request, response) => {
         name,
         passwordHash
     })
-    const result = await user.save()
+    await user.save()
 
-    response.status(201).json(result)
+    response.status(201).json(user)
 })
 
 module.exports = usersRouter
