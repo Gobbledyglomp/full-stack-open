@@ -1,8 +1,23 @@
+const jwt = require('jsonwebtoken')
 const blogsRouter = require('express').Router()
+
+const config = require('../utils/config')
+
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
+// Functions
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.startsWith('Bearer ')) {
+        return authorization.replace('Bearer ', '')
+    }
+    return null
+}
+
+//
 // GET
+//
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
         .find({})
@@ -18,27 +33,34 @@ blogsRouter.get('/:id', async (request, response) => {
     response.json(blog)
 })
 
+//
 // POST
-const getRandomUser = async () => {
-    const users = await User.find({})
-    const randomIndex = Math.floor(Math.random() * users.length)
-    
-    return users[randomIndex]
-} 
-
+//
 blogsRouter.post('/', async (request, response) => {
-    const randomUser = await getRandomUser()
+    const decodedToken = jwt.verify(getTokenFrom(request), config.SECRET)
+    if (!decodedToken.id) {
+        return response.status(401).json({
+            error: 'token invalid'
+        })
+    }
+
+    const user = await User.findById(decodedToken.id)
+    if (!user) {
+        return response.status(400).json({
+            error: 'UserId missing or not valid'
+        })
+    }
 
     const blog = new Blog({
         ...request.body,
-        user: randomUser._id
+        user: user._id
     })
-    const blogResult = await blog.save()
+    await blog.save()
 
-    randomUser.blogs = randomUser.blogs.concat(blogResult._id)
-    await randomUser.save()
-    
-    response.status(201).json(blogResult)
+    user.blogs = user.blogs.concat(blog._id)
+    await user.save()
+
+    response.status(201).json(blog)
 })
 
 // PUT
