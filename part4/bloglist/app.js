@@ -6,7 +6,8 @@ const logger = require('./utils/logger')
 const config = require('./utils/config')
 
 const blogsRouter = require('./controllers/blogs')
-const usersRouter =  require('./controllers/users')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 
 // Connecting to MongoDB
 logger.info('Mongoose', 'Connecting to', config.MONGODB_URI)
@@ -32,6 +33,7 @@ if (config.ENV !== 'test') {
 
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
