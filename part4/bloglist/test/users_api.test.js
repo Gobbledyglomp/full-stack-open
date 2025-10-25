@@ -5,14 +5,19 @@ const mongoose = require('mongoose')
 
 const app = require('../app')
 const helper = require('./test_helper')
+
 const User = require('../models/user')
+const Blog = require('../models/blog')
 
 const api = supertest(app)
 
 describe('when there are initially some users saved', () => {
     beforeEach(async () => {
+        await Blog.deleteMany({})
         await User.deleteMany({})
+
         await User.insertMany(helper.initialUsers)
+        await Blog.insertMany(helper.initialBlogs)
     })
 
     describe('POST', () => {
