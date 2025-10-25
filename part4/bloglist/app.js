@@ -26,6 +26,7 @@ const app = express()
 
 // Middleware
 app.use(express.json())
+app.use(middleware.tokenExtractor)
 
 if (config.ENV !== 'test') {
     app.use(middleware.requestLogger)
