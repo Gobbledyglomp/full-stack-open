@@ -1,7 +1,7 @@
 import { useState } from "react"
 import blogService from "../services/blogs"
 
-const CreateBlogs = ({ addBlog }) => {
+const CreateBlogs = ({ addBlog, notify }) => {
     // States
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -10,12 +10,17 @@ const CreateBlogs = ({ addBlog }) => {
     // Handler
     const handleSubmit = async event => {
         event.preventDefault()
-        const blog = await blogService.create({ title, author, url })
-        addBlog(blog)
-        
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+
+        try {
+            const blog = await blogService.create({ title, author, url })
+            addBlog(blog)
+            notify('info', `New blog "${title}" by ${author} added`)
+            setTitle('')
+            setAuthor('')
+            setUrl('')
+        } catch (error) {
+            notify('error', error.response.data.error)
+        }      
     }
 
     // Render

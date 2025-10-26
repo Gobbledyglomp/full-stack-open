@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 
-import Loading from "./Loading"
-import CreateBlogs from "./CreateBlogs"
+import Loading from './Loading'
+import CreateBlogs from './CreateBlogs'
+import Notification from './Notification'
 
 import blogService from '../services/blogs'
 
@@ -16,10 +17,10 @@ const UserInfo = ({ name }) => {
     if (!name) return <Loading />
 
     return (
-        <p>
+        <div>
             {name} logged in. &nbsp;
             <button onClick={logout}>Logout</button>
-        </p>
+        </div>
     )
 }
 
@@ -43,6 +44,7 @@ const BlogList = ({ blogs }) => {
 const Blogs = ({ user }) => {
     // States
     const [blogs, setBlogs] = useState([])
+    const [notification, setNotification] = useState({ type: null, text: null })
     
     // Effects
     useEffect(() => {
@@ -55,13 +57,18 @@ const Blogs = ({ user }) => {
     const addBlog = blog => {
         setBlogs(blogs.concat(blog))
     }
+    const notify = (type, text) => {
+        setNotification({ type, text})
+        setTimeout(() => setNotification({ text: null }), 3000)
+    }
 
     // Render
     return (
         <>
             <h1>Blogs</h1>
-            <UserInfo name={user.name} />
-            <CreateBlogs addBlog={addBlog} />
+            <Notification notification={notification} />
+            <UserInfo name={user.name} />            
+            <CreateBlogs addBlog={addBlog} notify={notify} />
             <BlogList blogs={blogs} />
         </>
     )

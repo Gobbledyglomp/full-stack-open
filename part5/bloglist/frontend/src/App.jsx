@@ -28,14 +28,10 @@ const App = () => {
   const login = async (event, username, password) => {
       event.preventDefault()
 
-      try {
-        const user = await loginService.login({ username, password })
-        blogService.setToken(user.token)
-        window.localStorage.setItem('user', JSON.stringify(user))
-        setUser(user)
-      } catch (e) {
-        console.error(e)
-      }
+      const user = await loginService.login({ username, password })
+      blogService.setToken(user.token)
+      window.localStorage.setItem('user', JSON.stringify(user))
+      setUser(user)
   }
 
   //
