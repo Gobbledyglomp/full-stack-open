@@ -44,6 +44,7 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
         user: user._id
     })
     await blog.save()
+    blog.populate('user', { username: 1, name: 1 })
 
     user.blogs = user.blogs.concat(blog._id)
     await user.save()
@@ -64,6 +65,7 @@ blogsRouter.put('/:id', async (request, response) => {
     }
 
     await blog.save()
+    blog.populate('user', { username: 1, name: 1 })
     response.json(blog)
 })
 

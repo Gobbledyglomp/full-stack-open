@@ -9,39 +9,28 @@ import loginService from './services/login'
 
 const App = () => {
   // States
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(undefined)
 
-  //
   // Effects
-  //
   useEffect(() => {
     const user = window.localStorage.getItem('user')
 
     if (user) {
       const userParsed = JSON.parse(user)
+      blogService.setToken(userParsed.token)
       setUser(userParsed)
     } else {
       setUser(null)
     }
   }, [])
 
-  useEffect(() => {
-    if (user) {
-      blogService.getAll().then(blogs =>
-        setBlogs(blogs)
-      )
-    }
-  }, [user])
-
-  //
   // Functions
-  //
   const login = async (event, username, password) => {
       event.preventDefault()
 
       try {
         const user = await loginService.login({ username, password })
+        blogService.setToken(user.token)
         window.localStorage.setItem('user', JSON.stringify(user))
         setUser(user)
       } catch (e) {
@@ -61,8 +50,7 @@ const App = () => {
   }
 
   return (
-    <Blogs 
-      blogs={blogs}
+    <Blogs
       user={user}
     />
   )
