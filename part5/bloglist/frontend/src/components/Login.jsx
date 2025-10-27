@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 
-import Notification from "./Notification"
+import Notification from './Notification'
 
 const Login = ({ login }) => {
     // States
@@ -25,7 +25,7 @@ const Login = ({ login }) => {
     // Render
     return (
         <>
-            <h1>Log in to application</h1>            
+            <h1>Log in to application</h1>
             <Notification ref={notificationRef} />
             <form onSubmit={handleLogin}>
                 <div>

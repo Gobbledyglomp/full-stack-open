@@ -29,7 +29,7 @@ const UserInfo = ({ name }) => {
 const Blogs = ({ user }) => {
     // States
     const [blogs, setBlogs] = useState([])
-    
+
     // Refs
     const notificationRef = useRef({ notify: null })
 
@@ -57,7 +57,7 @@ const Blogs = ({ user }) => {
             <Notification ref={notificationRef} />
             <UserInfo name={user.name} />
 
-            <Togglable label="test">
+            <Togglable label="Create New Blog">
                 <CreateBlogs addBlog={addBlog} notify={notify} />
             </Togglable>
             <BlogList

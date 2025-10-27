@@ -1,5 +1,5 @@
-import { useState } from "react"
-import blogService from "../services/blogs"
+import { useState } from 'react'
+import blogService from '../services/blogs'
 
 const CreateBlogs = ({ addBlog, notify }) => {
     // States
@@ -21,7 +21,7 @@ const CreateBlogs = ({ addBlog, notify }) => {
             setUrl('')
         } catch (error) {
             notify('error', error.response.data.error)
-        }      
+        }
     }
 
     // Render

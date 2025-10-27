@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Togglable = ({ label, children }) => {
     // States
@@ -6,7 +6,7 @@ const Togglable = ({ label, children }) => {
 
     // Styles
     const style = { marginBottom: '20px' }
-    
+
     const showWhenVisible = { display: visible ? '' : 'none' }
     const showWhenInvisible = { display: !visible ? '' : 'none' }
 
@@ -23,7 +23,7 @@ const Togglable = ({ label, children }) => {
                 <button onClick={toggleVisibility}>Cancel</button>
             </div>
             <div style={showWhenInvisible}>
-                <button onClick={toggleVisibility}>Create New Blog</button>
+                <button onClick={toggleVisibility}>{label}</button>
             </div>
         </div>
     )

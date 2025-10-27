@@ -8,48 +8,48 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  // States
-  const [user, setUser] = useState(undefined)
+    // States
+    const [user, setUser] = useState(undefined)
 
-  // Effects
-  useEffect(() => {
-    const user = window.localStorage.getItem('user')
+    // Effects
+    useEffect(() => {
+        const user = window.localStorage.getItem('user')
 
-    if (user) {
-      const userParsed = JSON.parse(user)
-      blogService.setToken(userParsed.token)
-      setUser(userParsed)
-    } else {
-      setUser(null)
+        if (user) {
+            const userParsed = JSON.parse(user)
+            blogService.setToken(userParsed.token)
+            setUser(userParsed)
+        } else {
+            setUser(null)
+        }
+    }, [])
+
+    // Functions
+    const login = async (event, username, password) => {
+        event.preventDefault()
+
+        const user = await loginService.login({ username, password })
+        blogService.setToken(user.token)
+        window.localStorage.setItem('user', JSON.stringify(user))
+        setUser(user)
     }
-  }, [])
 
-  // Functions
-  const login = async (event, username, password) => {
-      event.preventDefault()
+    //
+    // Render
+    //
+    if (user === undefined) return <Loading />
 
-      const user = await loginService.login({ username, password })
-      blogService.setToken(user.token)
-      window.localStorage.setItem('user', JSON.stringify(user))
-      setUser(user)
-  }
+    if (user === null) {
+        return (
+            <Login login={login} />
+        )
+    }
 
-  //
-  // Render
-  //
-  if (user === undefined) return <Loading />
-
-  if (user === null) {
     return (
-      <Login login={login} />
+        <Blogs
+            user={user}
+        />
     )
-  }
-
-  return (
-    <Blogs
-      user={user}
-    />
-  )
 }
 
 export default App

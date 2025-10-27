@@ -6,7 +6,7 @@ const Notification = ({ ref }) => {
         type: null,
         text: null
     })
-    
+
     // Imperative handle
     useImperativeHandle(ref, () => {
         return { notify }
@@ -25,14 +25,14 @@ const Notification = ({ ref }) => {
     const style = {
         fontFamily: 'sans-serif',
         fontWeight: '700',
-        color: notification.type === 'error' 
-            ? '#d32f2f' 
+        color: notification.type === 'error'
+            ? '#d32f2f'
             : '#0288d1',
-        backgroundColor: notification.type === 'error' 
-            ? '#fff5f4' 
+        backgroundColor: notification.type === 'error'
+            ? '#fff5f4'
             : '#e1f5fe',
-        border: `3px solid ${notification.type === 'error' 
-            ? '#d32f2f' 
+        border: `3px solid ${notification.type === 'error'
+            ? '#d32f2f'
             : '#0288d1'}`,
         borderRadius: '12px',
         padding: '10px 16px',

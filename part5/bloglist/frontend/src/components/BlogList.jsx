@@ -16,7 +16,7 @@ const Blog = ({
     // Styles
     //
     const blogStyle = {
-        padding: '10px', 
+        padding: '10px',
         border: '2px solid #0288d1',
         backgroundColor: '#eaf8ff',
         borderWidth: 1,
@@ -39,7 +39,7 @@ const Blog = ({
         display: toggled ? '' : 'none',
         marginTop: '10px'
     }
-    
+
     // Functions
     const toggle = () => {
         setToggled(!toggled)
@@ -56,7 +56,7 @@ const Blog = ({
             updateBlog(response)
         } catch (error) {
             notify('error', error.response.data.error)
-        }        
+        }
     }
 
     const handleDeletion = async event => {
@@ -70,7 +70,7 @@ const Blog = ({
             }
         } catch (error) {
             notify('error', error.response.data.error)
-        }        
+        }
     }
 
     //
@@ -92,7 +92,7 @@ const Blog = ({
             <div style={descriptionStyle}>
                 <a href={blog.url}>
                     {blog.url}
-                </a><br />                
+                </a><br />
                 Likes: {blog.likes}&nbsp;
                 <button onClick={handleLike}>❤️</button><br />
                 {blog.user.name}
@@ -103,7 +103,7 @@ const Blog = ({
                     </button>
                 </div>
             </div>
-        </div>  
+        </div>
     )
 }
 
@@ -124,7 +124,7 @@ const BlogList = ({
 
         setBlogs(updatedBlogs)
     }
-    
+
     const deleteBlog = deletedBlog => {
         const updatedBlogs = blogs.filter(blog => blog.id !== deletedBlog.id)
         setBlogs(updatedBlogs)
