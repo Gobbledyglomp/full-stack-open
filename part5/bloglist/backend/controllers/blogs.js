@@ -28,17 +28,11 @@ blogsRouter.get('/:id', async (request, response) => {
 blogsRouter.post('/', userExtractor, async (request, response) => {
     if (request.token === null) {
         return response.status(401).json({
-            error: 'missing token'
+            error: 'token missing or invalid'
         })
     }
 
     const user = request.user
-    if (!user) {
-        return response.status(400).json({
-            error: 'UserId missing or not valid'
-        })
-    }
-
     const blog = new Blog({
         ...request.body,
         user: user._id
@@ -53,9 +47,14 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
 })
 
 // PUT
-blogsRouter.put('/:id', async (request, response) => {
-    const blog = await Blog.findById(request.params.id)
-    
+blogsRouter.put('/:id', userExtractor, async (request, response) => {
+    if (request.token === null) {
+        return response.status(401).json({
+            error: 'token missing or invalid'
+        })
+    }
+
+    const blog = await Blog.findById(request.params.id)    
     if (!blog) {
         return response.status(404).json({ error: `Blog ${request.params.id} was not found` })
     }
@@ -65,7 +64,7 @@ blogsRouter.put('/:id', async (request, response) => {
     }
 
     await blog.save()
-    blog.populate('user', { username: 1, name: 1 })
+    await blog.populate('user', { username: 1, name: 1 })
     response.json(blog)
 })
 
@@ -73,7 +72,7 @@ blogsRouter.put('/:id', async (request, response) => {
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
     if (request.token === null) {
         return response.status(401).json({
-            error: 'missing token'
+            error: 'token missing or invalid'
         })
     }
 

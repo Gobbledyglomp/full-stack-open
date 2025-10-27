@@ -26,7 +26,6 @@ const UserInfo = ({ name }) => {
     )
 }
 
-// Main export
 const Blogs = ({ user }) => {
     // States
     const [blogs, setBlogs] = useState([])
@@ -42,6 +41,11 @@ const Blogs = ({ user }) => {
     }, [])
 
     // Functions
+    const notify = (type, text) => {
+        if (notificationRef) {
+            notificationRef.current.notify(type, text)
+        }
+    }
     const addBlog = blog => {
         setBlogs(blogs.concat(blog))
     }
@@ -54,9 +58,13 @@ const Blogs = ({ user }) => {
             <UserInfo name={user.name} />
 
             <Togglable label="test">
-                <CreateBlogs addBlog={addBlog} notify={notificationRef.current.notify} />
+                <CreateBlogs addBlog={addBlog} notify={notify} />
             </Togglable>
-            <BlogList blogs={blogs} />
+            <BlogList
+                blogs={blogs}
+                setBlogs={setBlogs}
+                notify={notify}
+            />
         </>
     )
 }

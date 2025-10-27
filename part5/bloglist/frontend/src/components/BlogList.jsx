@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-const Blog = ({ blog }) => {
+import blogService from '../services/blogs'
+
+const Blog = ({ blog, updateBlog, notify }) => {
     // States
     const [toggled, setToggled] = useState(false)
 
@@ -29,6 +31,18 @@ const Blog = ({ blog }) => {
         setToggled(!toggled)
     }
 
+    // Handlers
+    const handleLike = async event => {
+        event.preventDefault()
+
+        try {
+            const response = await blogService.like(blog)
+            updateBlog(response)
+        } catch (error) {
+            notify('error', error.response.data.error)
+        }        
+    }
+
     // Render
     return (
         <div style={blogStyle}>
@@ -43,19 +57,37 @@ const Blog = ({ blog }) => {
                     {blog.url}
                 </a><br />                
                 Likes: {blog.likes}&nbsp;
-                <button onClick={() => {}}>❤️</button><br />
+                <button onClick={handleLike}>❤️</button><br />
                 {blog.user.name}
             </div>
         </div>  
     )
 }
 
-const BlogList = ({ blogs }) => {
+const BlogList = ({ blogs, setBlogs, notify }) => {
+    const updateBlog = updatedBlog => {
+        const updatedBlogs = blogs.map(blog => {
+            if (blog.id === updatedBlog.id) {
+                return updatedBlog
+            }
+
+            return blog
+        })
+
+        setBlogs(updatedBlogs)
+    }
+
+    // Render
     if (!blogs) return <Loading />
 
     return (
         <div>
-            {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+            {blogs.map(blog => <Blog
+                key={blog.id}
+                blog={blog}
+                updateBlog={updateBlog}
+                notify={notify}
+            />)}
         </div>
     )
 }
