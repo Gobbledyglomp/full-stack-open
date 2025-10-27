@@ -1,4 +1,26 @@
-const Notification = ({ notification }) => {
+import { useState, useImperativeHandle } from 'react'
+
+const Notification = ({ ref }) => {
+    // States
+    const [notification, setNotification] = useState({
+        type: null,
+        text: null
+    })
+    
+    // Imperative handle
+    useImperativeHandle(ref, () => {
+        return { notify }
+    })
+
+    // Functions
+    const notify = (type, text) => {
+        setNotification({ type, text })
+        setTimeout(() => setNotification({
+            type: null,
+            text: null
+        }), 3000)
+    }
+
     // Style
     const style = {
         fontFamily: 'sans-serif',

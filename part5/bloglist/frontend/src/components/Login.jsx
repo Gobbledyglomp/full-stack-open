@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import Notification from "./Notification"
 
@@ -6,20 +6,16 @@ const Login = ({ login }) => {
     // States
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [notification, setNotification] = useState({ type: null, text: null })
 
-    // Functions
-    const notify = (type, text) => {
-        setNotification({ type, text})
-        setTimeout(() => setNotification({ text: null }), 3000)
-    }
+    // Refs
+    const notificationRef = useRef({ notify: null })
 
     // Effects
     const handleLogin = async event => {
         try {
             await login(event, username, password)
         } catch (error) {
-            notify('error', error.response.data.error)
+            notificationRef.current.notify('error', error.response.data.error)
         } finally {
             setUsername('')
             setPassword('')
@@ -30,7 +26,7 @@ const Login = ({ login }) => {
     return (
         <>
             <h1>Log in to application</h1>            
-            <Notification notification={notification} />
+            <Notification ref={notificationRef} />
             <form onSubmit={handleLogin}>
                 <div>
                     <label>

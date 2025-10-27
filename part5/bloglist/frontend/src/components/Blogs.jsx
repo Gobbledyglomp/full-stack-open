@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import Loading from './Loading'
 import CreateBlogs from './CreateBlogs'
@@ -44,8 +44,10 @@ const BlogList = ({ blogs }) => {
 const Blogs = ({ user }) => {
     // States
     const [blogs, setBlogs] = useState([])
-    const [notification, setNotification] = useState({ type: null, text: null })
     
+    // Refs
+    const notificationRef = useRef({ notify: null })
+
     // Effects
     useEffect(() => {
         blogService
@@ -57,18 +59,14 @@ const Blogs = ({ user }) => {
     const addBlog = blog => {
         setBlogs(blogs.concat(blog))
     }
-    const notify = (type, text) => {
-        setNotification({ type, text})
-        setTimeout(() => setNotification({ text: null }), 3000)
-    }
 
     // Render
     return (
         <>
             <h1>Blogs</h1>
-            <Notification notification={notification} />
+            <Notification ref={notificationRef} />
             <UserInfo name={user.name} />            
-            <CreateBlogs addBlog={addBlog} notify={notify} />
+            <CreateBlogs addBlog={addBlog} notify={notificationRef.current.notify} />
             <BlogList blogs={blogs} />
         </>
     )
