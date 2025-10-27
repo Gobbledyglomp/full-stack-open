@@ -63,6 +63,7 @@ const Blogs = ({ user }) => {
             <BlogList
                 blogs={blogs}
                 setBlogs={setBlogs}
+                currentUser={user}
                 notify={notify}
             />
         </>

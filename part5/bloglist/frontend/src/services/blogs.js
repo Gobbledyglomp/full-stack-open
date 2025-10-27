@@ -21,6 +21,15 @@ const create = async blog => {
   return response.data
 }
 
+const deleteOne = async blog => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const response = await axios.delete(`${baseUrl}/${blog.id}`, config)
+  return response.data
+}
+
 const like = async blog => {
   const config = {
     headers: { Authorization: token }
@@ -38,5 +47,6 @@ export default {
   setToken,
   getAll,
   create,
+  deleteOne,
   like,
 }

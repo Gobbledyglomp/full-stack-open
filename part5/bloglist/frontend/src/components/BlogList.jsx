@@ -2,11 +2,19 @@ import { useState } from 'react'
 
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, updateBlog, notify }) => {
+const Blog = ({
+    blog,
+    updateBlog,
+    deleteBlog,
+    currentUser,
+    notify
+}) => {
     // States
     const [toggled, setToggled] = useState(false)
 
+    //
     // Styles
+    //
     const blogStyle = {
         padding: '10px', 
         border: '2px solid #0288d1',
@@ -21,6 +29,12 @@ const Blog = ({ blog, updateBlog, notify }) => {
     const buttonStyle = {
         marginLeft: 'auto'
     }
+    const deleteButtonStyle = {
+        marginTop: '10px',
+        display: blog.user.username === currentUser.username
+            ? ''
+            : 'none'
+    }
     const descriptionStyle = {
         display: toggled ? '' : 'none',
         marginTop: '10px'
@@ -31,7 +45,9 @@ const Blog = ({ blog, updateBlog, notify }) => {
         setToggled(!toggled)
     }
 
+    //
     // Handlers
+    //
     const handleLike = async event => {
         event.preventDefault()
 
@@ -43,15 +59,36 @@ const Blog = ({ blog, updateBlog, notify }) => {
         }        
     }
 
+    const handleDeletion = async event => {
+        event.preventDefault()
+
+        try {
+            const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}`)
+            if (canDelete) {
+                await blogService.deleteOne(blog)
+                deleteBlog(blog)
+            }
+        } catch (error) {
+            notify('error', error.response.data.error)
+        }        
+    }
+
+    //
     // Render
+    //
     return (
         <div style={blogStyle}>
+            {/* Title */}
             <div style={titleStyle}>
                 <i>{blog.title}</i> &nbsp;by {blog.author}
-                <button onClick={toggle} style={buttonStyle}>
-                    {toggled ? 'Hide' : 'View'}
-                </button>
+                {/* Button */}
+                <div style={buttonStyle}>
+                    <button onClick={toggle}>
+                        {toggled ? 'Hide' : 'View'}
+                    </button>
+                </div>
             </div>
+            {/* Description */}
             <div style={descriptionStyle}>
                 <a href={blog.url}>
                     {blog.url}
@@ -59,12 +96,23 @@ const Blog = ({ blog, updateBlog, notify }) => {
                 Likes: {blog.likes}&nbsp;
                 <button onClick={handleLike}>❤️</button><br />
                 {blog.user.name}
+                {/* Button */}
+                <div style={deleteButtonStyle}>
+                    <button onClick={handleDeletion}>
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>  
     )
 }
 
-const BlogList = ({ blogs, setBlogs, notify }) => {
+const BlogList = ({
+    blogs,
+    setBlogs,
+    currentUser,
+    notify
+}) => {
     const updateBlog = updatedBlog => {
         const updatedBlogs = blogs.map(blog => {
             if (blog.id === updatedBlog.id) {
@@ -74,6 +122,11 @@ const BlogList = ({ blogs, setBlogs, notify }) => {
             return blog
         })
 
+        setBlogs(updatedBlogs)
+    }
+    
+    const deleteBlog = deletedBlog => {
+        const updatedBlogs = blogs.filter(blog => blog.id !== deletedBlog.id)
         setBlogs(updatedBlogs)
     }
 
@@ -88,6 +141,8 @@ const BlogList = ({ blogs, setBlogs, notify }) => {
                     key={blog.id}
                     blog={blog}
                     updateBlog={updateBlog}
+                    deleteBlog={deleteBlog}
+                    currentUser={currentUser}
                     notify={notify}
                 />)
             }
