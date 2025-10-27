@@ -4,6 +4,7 @@ import Loading from './Loading'
 import CreateBlogs from './CreateBlogs'
 import Notification from './Notification'
 import Togglable from './Togglable'
+import BlogList from './BlogList'
 
 import blogService from '../services/blogs'
 
@@ -21,22 +22,6 @@ const UserInfo = ({ name }) => {
         <div style={{ marginBottom: '20px' }}>
             {name} logged in. &nbsp;
             <button onClick={logout}>Logout</button>
-        </div>
-    )
-}
-
-const Blog = ({ blog }) => (
-    <div>
-        <i>{blog.title}</i> by {blog.author}
-    </div>  
-)
-
-const BlogList = ({ blogs }) => {
-    if (!blogs) return <Loading />
-
-    return (
-        <div>
-            {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
         </div>
     )
 }
