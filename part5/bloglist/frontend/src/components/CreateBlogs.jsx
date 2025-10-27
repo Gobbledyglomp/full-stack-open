@@ -15,6 +15,7 @@ const CreateBlogs = ({ addBlog, notify }) => {
             const blog = await blogService.create({ title, author, url })
             addBlog(blog)
             notify('info', `New blog "${title}" by ${author} added`)
+
             setTitle('')
             setAuthor('')
             setUrl('')
@@ -62,7 +63,6 @@ const CreateBlogs = ({ addBlog, notify }) => {
                     <button type="submit">Create</button>
                 </div>
             </form>
-            <br />
         </div>
     )
 }

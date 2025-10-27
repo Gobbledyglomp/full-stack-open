@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import Loading from './Loading'
 import CreateBlogs from './CreateBlogs'
 import Notification from './Notification'
+import Togglable from './Togglable'
 
 import blogService from '../services/blogs'
 
@@ -17,7 +18,7 @@ const UserInfo = ({ name }) => {
     if (!name) return <Loading />
 
     return (
-        <div>
+        <div style={{ marginBottom: '20px' }}>
             {name} logged in. &nbsp;
             <button onClick={logout}>Logout</button>
         </div>
@@ -65,8 +66,11 @@ const Blogs = ({ user }) => {
         <>
             <h1>Blogs</h1>
             <Notification ref={notificationRef} />
-            <UserInfo name={user.name} />            
-            <CreateBlogs addBlog={addBlog} notify={notificationRef.current.notify} />
+            <UserInfo name={user.name} />
+
+            <Togglable label="test">
+                <CreateBlogs addBlog={addBlog} notify={notificationRef.current.notify} />
+            </Togglable>
             <BlogList blogs={blogs} />
         </>
     )
