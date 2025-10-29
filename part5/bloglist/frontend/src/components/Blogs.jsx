@@ -46,8 +46,13 @@ const Blogs = ({ user }) => {
             notificationRef.current.notify(type, text)
         }
     }
-    const addBlog = blog => {
-        setBlogs(blogs.concat(blog))
+    const addBlog = async blog => {
+        const response = await blogService.create({
+            title: blog.title,
+            author: blog.author,
+            url: blog.url
+        })
+        setBlogs(blogs.concat(response))
     }
 
     // Render

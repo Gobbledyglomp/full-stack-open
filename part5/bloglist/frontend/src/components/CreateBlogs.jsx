@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
 const CreateBlogs = ({ addBlog, notify }) => {
     // States
@@ -12,8 +11,7 @@ const CreateBlogs = ({ addBlog, notify }) => {
         event.preventDefault()
 
         try {
-            const blog = await blogService.create({ title, author, url })
-            addBlog(blog)
+            await addBlog({ title, author, url })
             notify('info', `New blog "${title}" by ${author} added`)
 
             setTitle('')
