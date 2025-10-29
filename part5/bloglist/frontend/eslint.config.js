@@ -33,10 +33,18 @@ export default [
             quotes: ['error', 'single'],
             semi: ['error', 'never'],
             eqeqeq: 'error',
-            //'no-trailing-spaces': 'error',
+            'no-trailing-spaces': 'error',
             'object-curly-spacing': ['error', 'always'],
             'arrow-spacing': ['error', { before: true, after: true }],
             'no-console': 'off',
+        }
+    },
+    {
+        files: ['**/*.test.{js,jsx}'],
+        languageOptions: {
+            globals: {
+                ...globals.vitest
+            }
         }
     }
 ]
