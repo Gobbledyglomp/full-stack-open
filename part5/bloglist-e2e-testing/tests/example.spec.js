@@ -71,7 +71,7 @@ describe('Blog app', () => {
           .toBeVisible()
       })
 
-      test('the blog can be deleted by owner user', async ({ page }) => {        
+      test('the blog can be deleted by owner user', async ({ page }) => {
         await page.getByRole('button', { name: 'View' })
           .click()
 
@@ -81,6 +81,18 @@ describe('Blog app', () => {
 
         await expect(page.locator('.bloglist')
           .getByText('Test blog by Playwright'))
+          .not.toBeVisible()
+      })
+
+      test('the blog cannot be deleted by other user', async ({ page }) => {        
+        await page.getByRole('button', { name: 'Logout' })
+          .click()
+
+        await helper.login(page, 'example', 'example')
+        await page.getByRole('button', { name: 'View' })
+          .click()
+
+        await expect(page.getByRole('button', { name: 'Delete' }))
           .not.toBeVisible()
       })
     })

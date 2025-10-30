@@ -7,6 +7,13 @@ const setupDatabase = async request => {
            password: 'root',
         }
     })
+    await request.post('/api/users', {
+        data: {
+           username: 'example',
+           name: 'Example User',
+           password: 'example',
+        }
+    })
 }
 
 const login = async (page, username, password)  => {
