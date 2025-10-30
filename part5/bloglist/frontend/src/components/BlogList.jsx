@@ -27,7 +27,7 @@ const BlogList = ({
     if (!blogs) return <Loading />
 
     return (
-        <div>
+        <div className="bloglist">
             {blogs
                 .sort((a, b) => b.likes - a.likes)
                 .map(blog => <Blog

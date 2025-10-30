@@ -34,4 +34,22 @@ describe('Blog app', () => {
         .toContainText('invalid username or password')
     })
   })
+
+  describe('When logged in', () => {
+    beforeEach(async ({ page }) => {
+      await helper.login(page, 'root', 'root')
+    })
+
+    test('a new blog can be created', async ({ page }) => {
+      await helper.createBlog(page, {
+        title: 'Test blog',
+        author: 'Playwright',
+        url: 'https://example.com/'
+      })
+
+      await expect(page.locator('.bloglist')
+        .getByText('Test blog by Playwright'))
+        .toBeVisible()
+    })
+  })
 })
