@@ -51,5 +51,25 @@ describe('Blog app', () => {
         .getByText('Test blog by Playwright'))
         .toBeVisible()
     })
+
+    describe('and there is a blog', () => {
+      beforeEach(async ({ page }) => {
+        await helper.createBlog(page, {
+          title: 'Test blog',
+          author: 'Playwright',
+          url: 'https://example.com/'
+        })
+      })
+
+      test('the blog can be liked', async ({ page }) => {
+        await page.getByRole('button', { name: 'View' })
+          .click()
+        await page.getByRole('button', { name: '❤️' })
+          .click()
+
+        await expect(page.getByText('Likes: 1'))
+          .toBeVisible()
+      })
+    })
   })
 })
