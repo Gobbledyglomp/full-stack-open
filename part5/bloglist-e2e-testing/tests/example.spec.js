@@ -1,22 +1,37 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
+const helper = require('./helper')
 
 describe('Blog app', () => {
-  beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:5173')
+  beforeEach(async ({ page, request }) => {
+    await helper.setupDatabase(request)
+    await page.goto('/')
   })
 
   test('Login form is shown', async ({ page }) => {
-    await expect(page
-      .getByRole('heading', { name: 'Log in to application' }))
+    await expect(page.getByRole('heading', { name: 'Log in to application' }))
       .toBeVisible()
-    await expect(page
-      .getByRole('textbox', { name: 'Username' }))
+    await expect(page.getByRole('textbox', { name: 'Username' }))
       .toBeVisible()
-    await expect(page
-      .getByRole('textbox', { name: 'Password' }))
+    await expect(page.getByRole('textbox', { name: 'Password' }))
       .toBeVisible()
-    await expect(page
-      .getByRole('button', { name: 'Login' }))
+    await expect(page.getByRole('button', { name: 'Login' }))
       .toBeVisible()
+  })
+
+  describe('Login', () => {
+    test('succeeds with correct credentials', async ({ page }) => {
+      await helper.login(page, 'root', 'root')
+      await expect(page.getByText('Superuser logged in.'))
+        .toBeVisible()
+    })
+
+    test('fails with wrong credentials', async ({ page }) => {
+      await helper.login(page, 'root', 'wrongPassword')
+
+      await expect(page.locator('.notification'))
+        .toBeVisible()
+      await expect(page.locator('.notification'))
+        .toContainText('invalid username or password')
+    })
   })
 })

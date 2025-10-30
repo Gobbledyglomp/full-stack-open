@@ -44,7 +44,7 @@ const Notification = ({ ref }) => {
     if (notification.text === null) return null
 
     return (
-        <div style={style}>
+        <div style={style} className="notification">
             {notification.text}
         </div>
     )
