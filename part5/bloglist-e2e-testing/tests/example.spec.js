@@ -70,6 +70,19 @@ describe('Blog app', () => {
         await expect(page.getByText('Likes: 1'))
           .toBeVisible()
       })
+
+      test('the blog can be deleted by owner user', async ({ page }) => {        
+        await page.getByRole('button', { name: 'View' })
+          .click()
+
+        page.on('dialog', dialog => dialog.accept());
+        await page.getByRole('button', { name: 'Delete' })
+          .click()
+
+        await expect(page.locator('.bloglist')
+          .getByText('Test blog by Playwright'))
+          .not.toBeVisible()
+      })
     })
   })
 })
