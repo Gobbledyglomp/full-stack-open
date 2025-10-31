@@ -133,15 +133,6 @@ describe('Blog app', () => {
       })
 
       test('the blogs are sorted by likes', async ({ page }) => {
-        await page.getByRole('button', { name: 'View' }).first()
-          .click()
-        await page.getByRole('button', { name: 'View' }).first()
-          .click()
-        await page.getByRole('button', { name: 'View' }).first()
-          .click()
-        await page.getByRole('button', { name: 'View' }).first()
-          .click()
-
         await expect(page.getByText('Likes: ').nth(0))
           .toContainText('506')
         await expect(page.getByText('Likes: ').nth(1))
