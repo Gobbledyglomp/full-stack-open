@@ -96,5 +96,61 @@ describe('Blog app', () => {
           .not.toBeVisible()
       })
     })
+
+    describe('and there is a blog', () => {
+      beforeEach(async ({ page, request }) => {
+        const token = await helper.getToken(request, {
+            username: 'root',
+            password: 'root'
+        })
+
+        await helper.postBlog(request, {
+          title: 'Test blog 1',
+          author: 'Playwright',
+          url: 'https://example.com/1',
+          likes: 12
+        }, token)
+        await helper.postBlog(request, {
+          title: 'Test blog 2',
+          author: 'Playwright',
+          url: 'https://example.com/2',
+          likes: 506
+        }, token)
+        await helper.postBlog(request, {
+          title: 'Test blog 3',
+          author: 'Playwright',
+          url: 'https://example.com/3',
+          likes: 32
+        }, token)
+        await helper.postBlog(request, {
+          title: 'Test blog 4',
+          author: 'Playwright',
+          url: 'https://example.com/4',
+          likes: 178
+        }, token)
+
+        await page.reload()
+      })
+
+      test('the blogs are sorted by likes', async ({ page }) => {
+        await page.getByRole('button', { name: 'View' }).first()
+          .click()
+        await page.getByRole('button', { name: 'View' }).first()
+          .click()
+        await page.getByRole('button', { name: 'View' }).first()
+          .click()
+        await page.getByRole('button', { name: 'View' }).first()
+          .click()
+
+        await expect(page.getByText('Likes: ').nth(0))
+          .toContainText('506')
+        await expect(page.getByText('Likes: ').nth(1))
+          .toContainText('178')
+        await expect(page.getByText('Likes: ').nth(2))
+          .toContainText('32')
+        await expect(page.getByText('Likes: ').nth(3))
+          .toContainText('12')
+      })
+    })
   })
 })

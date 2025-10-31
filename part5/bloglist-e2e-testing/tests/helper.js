@@ -16,6 +16,24 @@ const setupDatabase = async request => {
     })
 }
 
+const getToken = async (request, { username, password }) => {
+    const response = await request.post('/api/login', {
+        data: { username, password }
+    })
+    const body = await response.json()
+
+    return body.token
+}
+
+const postBlog = async (request, blog, token) =>  {
+    await request.post('/api/blogs', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        data: blog
+    })
+}
+
 const login = async (page, username, password)  => {
     await page
         .getByRole('textbox', { name: 'Username' })
@@ -32,7 +50,7 @@ const createBlog = async (page, { title, author, url }) => {
     await page
         .getByRole('button', { name: 'Create New Blog' })
         .click()
-    
+
     await page
         .getByRole('textbox', { name: 'Title:' })
         .fill(title)
@@ -53,6 +71,8 @@ const createBlog = async (page, { title, author, url }) => {
 
 export {
     setupDatabase,
+    getToken,
+    postBlog,
     login,
     createBlog,
 }
