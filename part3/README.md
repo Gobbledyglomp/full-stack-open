@@ -18,8 +18,8 @@
 <h3>
     <p>
         Repo:
-        <a href="https://github.com/Gobbledyglomp/full-stack-open-phonebook">
-            https://github.com/Gobbledyglomp/full-stack-open-phonebook
+        <a href="https://github.com/gobbledyglomp/full-stack-open-phonebook">
+            https://github.com/gobbledyglomp/full-stack-open-phonebook
         </a>
     </p>
 </h3>

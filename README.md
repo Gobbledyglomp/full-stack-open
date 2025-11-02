@@ -42,37 +42,37 @@
 
 <h3>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part6">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part6">
             • Part 6: Advanced state management
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part5">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part5">
             • Part 5: Testing React apps
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part4">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part4">
             • Part 4: Testing Express servers, user administration
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part3">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part3">
             • Part 3: Programming a server with NodeJS and Express
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part2">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part2">
             • Part 2: Communicating with server
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part1/">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part1/">
             • Part 1: Introduction to React
         </a>
     </p>
     <p>
-        <a href="https://github.com/Gobbledyglomp/full-stack-open/tree/main/part0/">
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part0/">
             • Part 0: Fundamentals of Web apps
         </a>
     </p>

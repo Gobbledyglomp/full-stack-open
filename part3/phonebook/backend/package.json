@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Phonebook backend",
   "license": "CC-BY-NC-SA-3.0",
-  "author": "Gobbledyglomp",
+  "author": "gobbledyglomp",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
