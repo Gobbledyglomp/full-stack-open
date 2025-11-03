@@ -10,6 +10,9 @@ const Notification = () => {
     marginBottom: 10,
   }
 
+  // Render
+  if (!notification.message) return <></>
+
   return <div style={style}>{notification.message}</div>
 }
 
