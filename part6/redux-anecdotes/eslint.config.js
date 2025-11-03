@@ -28,7 +28,7 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true }
+        { allowConstantExport: true },
       ],
       indent: ['error', 2, { 'SwitchCase': 1 }],
       'linebreak-style': ['error', 'unix'],
@@ -39,6 +39,13 @@ export default defineConfig([
       'object-curly-spacing': ['error', 'always'],
       'arrow-spacing': ['error', { before: true, after: true }],
       'no-console': 'off',
+      'comma-dangle': ['error', {
+        'arrays': 'always-multiline',
+        'objects': 'always-multiline',
+        'imports': 'always-multiline',
+        'exports': 'always-multiline',
+        'functions': 'never',
+      }],
     },
   },
 ])
