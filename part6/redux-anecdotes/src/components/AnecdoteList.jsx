@@ -14,10 +14,12 @@ const Anecdote = ({ anecdote, handleVote }) => {
 }
 
 const AnecdoteList = () => {
+  // Redux hooks
   const dispatch = useDispatch()
   const anecdotes = useSelector(({ anecdotes, filter }) =>
     anecdotes.filter(anecdote =>
-      anecdote.content.includes(filter)
+      anecdote.content.toLowerCase()
+        .includes(filter.toLowerCase())
     )
   )
 
