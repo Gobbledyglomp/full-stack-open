@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   type: 'info',
   message: '',
+  queue: 0,
 }
 
 const notificationSlice = createSlice({
@@ -13,18 +14,21 @@ const notificationSlice = createSlice({
       return {
         type: 'info',
         message: action.payload,
+        queue: state.queue + 1,
       }
     },
     setErrorNotification(state, action) {
       return {
         type: 'error',
         message: action.payload,
+        queue: state.queue + 1,
       }
     },
-    clearNotification() {
+    clearNotification(state) {
       return {
         type: 'info',
-        message: '',
+        message: state.message,
+        queue: state.queue - 1,
       }
     },
   },

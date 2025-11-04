@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 
 const Notification = () => {
+  // Redux hooks
   const notification = useSelector(({ notification }) => notification)
+  const queue = useSelector(({ notification }) => notification.queue)
 
   const style = {
     border: 'solid',
@@ -11,7 +13,7 @@ const Notification = () => {
   }
 
   // Render
-  if (!notification.message) return <></>
+  if (queue === 0) return <></>
 
   return <div style={style}>{notification.message}</div>
 }
