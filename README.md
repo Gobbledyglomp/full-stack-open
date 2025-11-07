@@ -12,7 +12,6 @@
     <img src="https://img.shields.io/badge/html-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" />
     <img src="https://img.shields.io/badge/CSS-673398?style=for-the-badge&logo=css&logoColor=white" />
     <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" />
-    <a href="https://www.npmjs.com/"><img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" /></a>
     <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" /></a>
     <a href="https://react.dev/"><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" /></a>
     <a href="https://axios-http.com/"><img src="https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white" /></a>
@@ -26,6 +25,8 @@
     <a href="https://eslint.org/"><img src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white" /></a>
     <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-%236E9F18?style=for-the-badge&logo=Vitest&logoColor=%23fcd703" /></a>
     <a href="https://playwright.dev/"><img src="https://img.shields.io/badge/Playwright-45ba4b?style=for-the-badge&logo=Playwright&logoColor=white" /></a>
+    <a href="https://redux.js.org/"><img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /></a>
+    <a href="https://tanstack.com/query/v4/docs/framework/react/overview"><img src="https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white" /></a>
 </p>
 
 <h2>
@@ -41,6 +42,11 @@
 </h2>
 
 <h3>
+    <p>
+        <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part7">
+            • Part 7: React router, custom hooks, styling app with CSS and webpack
+        </a>
+    </p>
     <p>
         <a href="https://github.com/gobbledyglomp/full-stack-open/tree/main/part6">
             • Part 6: Advanced state management
