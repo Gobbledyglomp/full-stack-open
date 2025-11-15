@@ -84,7 +84,7 @@ const Footer = () => (
 )
 
 const CreateNew = ({ addNew }) => {
-  // State
+  // Fields
   const content = useField('content')
   const author = useField('author')
   const info = useField('info')
@@ -92,7 +92,7 @@ const CreateNew = ({ addNew }) => {
   // Navigate
   const navigate = useNavigate()
 
-  // Handler
+  // Handlers
   const handleSubmit = (e) => {
     e.preventDefault()
     addNew({
@@ -103,6 +103,13 @@ const CreateNew = ({ addNew }) => {
     })
 
     navigate('/')
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    content.reset()
+    author.reset()
+    info.reset()
   }
 
   // Render
@@ -122,7 +129,10 @@ const CreateNew = ({ addNew }) => {
           url for more info
           <input {...info} />
         </div>
-        <button>create</button>
+        <div>
+          <button>create</button>
+          <button onClick={handleReset}>reset</button>
+        </div>
       </form>
     </div>
   )
