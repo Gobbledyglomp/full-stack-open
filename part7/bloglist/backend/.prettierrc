@@ -1,6 +1,6 @@
 {
   "tabWidth": 2,
-  "singleQuotasdasde": true,
+  "singleQuote": true,
   "semi": false,
   "bracketSpacing": true,
   "endOfLine": "lf"

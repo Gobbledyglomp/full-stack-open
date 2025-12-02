@@ -1,5 +1,5 @@
-import { useState } from "react"
-import blogService from "../services/blogs"
+import { useState } from 'react'
+import blogService from '../services/blogs'
 
 const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
   // States
@@ -9,26 +9,26 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
   // Styles
   //
   const blogStyle = {
-    padding: "10px",
-    border: "2px solid #0288d1",
-    backgroundColor: "#eaf8ff",
+    padding: '10px',
+    border: '2px solid #0288d1',
+    backgroundColor: '#eaf8ff',
     borderWidth: 1,
     marginBottom: 5,
-    maxWidth: "500px",
+    maxWidth: '500px',
   }
   const titleStyle = {
-    display: "flex",
+    display: 'flex',
   }
   const buttonStyle = {
-    marginLeft: "auto",
+    marginLeft: 'auto',
   }
   const deleteButtonStyle = {
-    marginTop: "10px",
-    display: blog.user.username === currentUser.username ? "" : "none",
+    marginTop: '10px',
+    display: blog.user.username === currentUser.username ? '' : 'none',
   }
   const descriptionStyle = {
-    display: toggled ? "" : "none",
-    marginTop: "10px",
+    display: toggled ? '' : 'none',
+    marginTop: '10px',
   }
 
   // Functions
@@ -46,7 +46,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
       const response = await blogService.like(blog)
       updateBlog(response)
     } catch (error) {
-      notify("error", error.response.data.error)
+      notify('error', error.response.data.error)
     }
   }
 
@@ -60,7 +60,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
         deleteBlog(blog)
       }
     } catch (error) {
-      notify("error", error.response.data.error)
+      notify('error', error.response.data.error)
     }
   }
 
@@ -76,7 +76,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
         </div>
         {/* Button */}
         <div style={buttonStyle}>
-          <button onClick={toggle}>{toggled ? "Hide" : "View"}</button>
+          <button onClick={toggle}>{toggled ? 'Hide' : 'View'}</button>
         </div>
       </div>
       {/* Description */}

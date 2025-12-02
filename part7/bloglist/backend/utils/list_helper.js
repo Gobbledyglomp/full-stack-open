@@ -1,4 +1,4 @@
-const _ = require("lodash")
+const _ = require('lodash')
 
 const dummy = () => {
   return 1
@@ -52,10 +52,10 @@ const mostBlogs = (blogs) => {
 const mostLikes = (blogs) => {
   return blogs.length > 0
     ? _.chain(blogs)
-        .groupBy("author")
-        .mapValues((values) => _.sumBy(values, "likes"))
+        .groupBy('author')
+        .mapValues((values) => _.sumBy(values, 'likes'))
         .map((value, key) => ({ author: key, likes: value }))
-        .maxBy("likes")
+        .maxBy('likes')
         .value()
     : null
 }

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 
-import Blogs from "./components/Blogs"
-import Login from "./components/Login"
-import Loading from "./components/Loading"
+import Blogs from './components/Blogs'
+import Login from './components/Login'
+import Loading from './components/Loading'
 
-import blogService from "./services/blogs"
-import loginService from "./services/login"
+import blogService from './services/blogs'
+import loginService from './services/login'
 
 const App = () => {
   // States
@@ -13,7 +13,7 @@ const App = () => {
 
   // Effects
   useEffect(() => {
-    const user = window.localStorage.getItem("user")
+    const user = window.localStorage.getItem('user')
 
     if (user) {
       const userParsed = JSON.parse(user)
@@ -30,7 +30,7 @@ const App = () => {
 
     const user = await loginService.login({ username, password })
     blogService.setToken(user.token)
-    window.localStorage.setItem("user", JSON.stringify(user))
+    window.localStorage.setItem('user', JSON.stringify(user))
     setUser(user)
   }
 

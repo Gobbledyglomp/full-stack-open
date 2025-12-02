@@ -1,20 +1,20 @@
-const blogsRouter = require("express").Router()
+const blogsRouter = require('express').Router()
 
-const { userExtractor } = require("../utils/middleware")
+const { userExtractor } = require('../utils/middleware')
 
-const Blog = require("../models/blog")
+const Blog = require('../models/blog')
 
 //
 // GET
 //
-blogsRouter.get("/", async (request, response) => {
-  const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 })
+blogsRouter.get('/', async (request, response) => {
+  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs)
 })
 
-blogsRouter.get("/:id", async (request, response) => {
+blogsRouter.get('/:id', async (request, response) => {
   const id = request.params.id
-  const blog = await Blog.findById(id).populate("user", {
+  const blog = await Blog.findById(id).populate('user', {
     username: 1,
     name: 1,
   })
@@ -24,10 +24,10 @@ blogsRouter.get("/:id", async (request, response) => {
 //
 // POST
 //
-blogsRouter.post("/", userExtractor, async (request, response) => {
+blogsRouter.post('/', userExtractor, async (request, response) => {
   if (request.token === null) {
     return response.status(401).json({
-      error: "token missing or invalid",
+      error: 'token missing or invalid',
     })
   }
 
@@ -37,20 +37,20 @@ blogsRouter.post("/", userExtractor, async (request, response) => {
     user: user._id,
   })
   await blog.save()
-  blog.populate("user", { username: 1, name: 1 })
+  blog.populate('user', { username: 1, name: 1 })
 
   user.blogs = user.blogs.concat(blog._id)
   await user.save()
 
-  await blog.populate("user", { username: 1, name: 1 })
+  await blog.populate('user', { username: 1, name: 1 })
   response.status(201).json(blog)
 })
 
 // PUT
-blogsRouter.put("/:id", userExtractor, async (request, response) => {
+blogsRouter.put('/:id', userExtractor, async (request, response) => {
   if (request.token === null) {
     return response.status(401).json({
-      error: "token missing or invalid",
+      error: 'token missing or invalid',
     })
   }
 
@@ -66,29 +66,29 @@ blogsRouter.put("/:id", userExtractor, async (request, response) => {
   }
 
   await blog.save()
-  await blog.populate("user", { username: 1, name: 1 })
+  await blog.populate('user', { username: 1, name: 1 })
   response.json(blog)
 })
 
 // DELETE
-blogsRouter.delete("/:id", userExtractor, async (request, response) => {
+blogsRouter.delete('/:id', userExtractor, async (request, response) => {
   if (request.token === null) {
     return response.status(401).json({
-      error: "token missing or invalid",
+      error: 'token missing or invalid',
     })
   }
 
   const blog = await Blog.findById(request.params.id)
   if (!blog) {
     return response.status(404).json({
-      error: "blog not found",
+      error: 'blog not found',
     })
   }
 
   const user = request.user
   if (blog.user.toString() !== user._id.toString()) {
     return response.status(401).json({
-      error: "not authorized to delete blog",
+      error: 'not authorized to delete blog',
     })
   }
 

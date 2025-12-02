@@ -1,23 +1,23 @@
-import globals from "globals"
-import js from "@eslint/js"
-import eslintConfigPrettier from "eslint-config-prettier/flat"
+import globals from 'globals'
+import js from '@eslint/js'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 
 const defaultConfig = [
   js.configs.recommended,
   {
-    files: ["**/*.js"],
+    files: ['**/*.js'],
     languageOptions: {
-      sourceType: "commonjs",
+      sourceType: 'commonjs',
       globals: { ...globals.node },
-      ecmaVersion: "latest",
+      ecmaVersion: 'latest',
     },
     plugins: {},
     rules: {
-      eqeqeq: "error",
+      eqeqeq: 'error',
     },
   },
   {
-    ignores: ["dist/**"],
+    ignores: ['dist/**'],
   },
 ]
 

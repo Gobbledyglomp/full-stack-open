@@ -1,17 +1,17 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from 'react'
 
-import Loading from "./Loading"
-import CreateBlogs from "./CreateBlogs"
-import Notification from "./Notification"
-import Togglable from "./Togglable"
-import BlogList from "./BlogList"
+import Loading from './Loading'
+import CreateBlogs from './CreateBlogs'
+import Notification from './Notification'
+import Togglable from './Togglable'
+import BlogList from './BlogList'
 
-import blogService from "../services/blogs"
+import blogService from '../services/blogs'
 
 const UserInfo = ({ name }) => {
   // Functions
   const logout = () => {
-    window.localStorage.removeItem("user")
+    window.localStorage.removeItem('user')
     window.location.reload()
   }
 
@@ -19,7 +19,7 @@ const UserInfo = ({ name }) => {
   if (!name) return <Loading />
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div style={{ marginBottom: '20px' }}>
       {name} logged in. &nbsp;
       <button onClick={logout}>Logout</button>
     </div>

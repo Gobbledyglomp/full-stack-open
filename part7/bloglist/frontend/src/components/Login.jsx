@@ -1,11 +1,11 @@
-import { useState, useRef } from "react"
+import { useState, useRef } from 'react'
 
-import Notification from "./Notification"
+import Notification from './Notification'
 
 const Login = ({ login }) => {
   // States
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   // Refs
   const notificationRef = useRef({ notify: null })
@@ -15,10 +15,10 @@ const Login = ({ login }) => {
     try {
       await login(event, username, password)
     } catch (error) {
-      notificationRef.current.notify("error", error.response.data.error)
+      notificationRef.current.notify('error', error.response.data.error)
     } finally {
-      setUsername("")
-      setPassword("")
+      setUsername('')
+      setPassword('')
     }
   }
 
