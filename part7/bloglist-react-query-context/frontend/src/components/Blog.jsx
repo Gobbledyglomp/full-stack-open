@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
-  // States
+import blogService from '../services/blogs'
+import useNotify from '../hooks/useNotify'
+
+const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
   const [toggled, setToggled] = useState(false)
 
-  //
+  const { notifyError } = useNotify()
+
   // Styles
-  //
   const blogStyle = {
     padding: '10px',
     border: '2px solid #0288d1',
@@ -36,9 +37,7 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
     setToggled(!toggled)
   }
 
-  //
   // Handlers
-  //
   const handleLike = async (event) => {
     event.preventDefault()
 
@@ -46,10 +45,9 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
       const response = await blogService.like(blog)
       updateBlog(response)
     } catch (error) {
-      notify('error', error.response.data.error)
+      notifyError(error.response.data.error)
     }
   }
-
   const handleDeletion = async (event) => {
     event.preventDefault()
 
@@ -60,13 +58,11 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
         deleteBlog(blog)
       }
     } catch (error) {
-      notify('error', error.response.data.error)
+      notifyError(error.response.data.error)
     }
   }
 
-  //
   // Render
-  //
   return (
     <div style={blogStyle}>
       {/* Title */}

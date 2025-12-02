@@ -1,6 +1,6 @@
 import Blog from './Blog'
 
-const BlogList = ({ blogs, setBlogs, currentUser, notify }) => {
+const BlogList = ({ blogs, setBlogs, currentUser }) => {
   const updateBlog = (updatedBlog) => {
     const updatedBlogs = blogs.map((blog) => {
       if (blog.id === updatedBlog.id) {
@@ -32,7 +32,6 @@ const BlogList = ({ blogs, setBlogs, currentUser, notify }) => {
             updateBlog={updateBlog}
             deleteBlog={deleteBlog}
             currentUser={currentUser}
-            notify={notify}
           />
         ))}
     </div>
