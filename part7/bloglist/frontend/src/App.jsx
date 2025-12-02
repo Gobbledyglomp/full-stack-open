@@ -1,55 +1,49 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
-import Blogs from './components/Blogs'
-import Login from './components/Login'
-import Loading from './components/Loading'
+import Blogs from "./components/Blogs"
+import Login from "./components/Login"
+import Loading from "./components/Loading"
 
-import blogService from './services/blogs'
-import loginService from './services/login'
+import blogService from "./services/blogs"
+import loginService from "./services/login"
 
 const App = () => {
-    // States
-    const [user, setUser] = useState(undefined)
+  // States
+  const [user, setUser] = useState(undefined)
 
-    // Effects
-    useEffect(() => {
-        const user = window.localStorage.getItem('user')
+  // Effects
+  useEffect(() => {
+    const user = window.localStorage.getItem("user")
 
-        if (user) {
-            const userParsed = JSON.parse(user)
-            blogService.setToken(userParsed.token)
-            setUser(userParsed)
-        } else {
-            setUser(null)
-        }
-    }, [])
-
-    // Functions
-    const login = async (event, username, password) => {
-        event.preventDefault()
-
-        const user = await loginService.login({ username, password })
-        blogService.setToken(user.token)
-        window.localStorage.setItem('user', JSON.stringify(user))
-        setUser(user)
+    if (user) {
+      const userParsed = JSON.parse(user)
+      blogService.setToken(userParsed.token)
+      setUser(userParsed)
+    } else {
+      setUser(null)
     }
+  }, [])
 
-    //
-    // Render
-    //
-    if (user === undefined) return <Loading />
+  // Functions
+  const login = async (event, username, password) => {
+    event.preventDefault()
 
-    if (user === null) {
-        return (
-            <Login login={login} />
-        )
-    }
+    const user = await loginService.login({ username, password })
+    blogService.setToken(user.token)
+    window.localStorage.setItem("user", JSON.stringify(user))
+    setUser(user)
+  }
 
-    return (
-        <Blogs
-            user={user}
-        />
-    )
+  //
+  // Render
+  //
+  if (user === undefined) return <Loading />
+
+  if (user === null) {
+    return <Login login={login} />
+  }
+
+  return <Blogs user={user} />
 }
 
 export default App
