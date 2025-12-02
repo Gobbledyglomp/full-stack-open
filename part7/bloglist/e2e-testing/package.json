@@ -1,0 +1,22 @@
+{
+  "name": "bloglist-e2e-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --project chromium",
+    "test:ui": "npm run test -- --ui",
+    "test:debug": "npm run test -- --debug",
+    "test:traces": "npm run test -- --trace on",
+    "test:report": "playwright show-report",
+    "test:codegen": "npx playwright codegen http://localhost:5173/"
+  },
+  "keywords": [],
+  "author": "gobbledyglomp",
+  "license": "CC-BY-NC-SA-3.0",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.2"
+  }
+}
