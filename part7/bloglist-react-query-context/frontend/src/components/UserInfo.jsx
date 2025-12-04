@@ -1,18 +1,22 @@
 import Loading from './Loading'
+import { useLoginSession } from '../hooks/login'
 
-const UserInfo = ({ name }) => {
-  // Functions
+const UserInfo = () => {
+  const { loginSession } = useLoginSession()
+
   const logout = () => {
     window.localStorage.removeItem('user')
     window.location.reload()
   }
 
   // Render
-  if (!name) return <Loading />
+  if (!loginSession.name) {
+    return <Loading />
+  }
 
   return (
     <div style={{ marginBottom: '20px' }}>
-      {name} logged in. &nbsp;
+      {loginSession.name} logged in. &nbsp;
       <button onClick={logout}>Logout</button>
     </div>
   )

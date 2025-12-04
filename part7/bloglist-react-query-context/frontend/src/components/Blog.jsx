@@ -3,8 +3,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import blogService from '../services/blogs'
 import useNotify from '../hooks/useNotify'
+import { useLoginSession } from '../hooks/login'
 
-const Blog = ({ blog, currentUser }) => {
+const Blog = ({ blog }) => {
+  const { loginSession } = useLoginSession()
+
   const [toggled, setToggled] = useState(false)
 
   const { notifyError } = useNotify()
@@ -29,15 +32,18 @@ const Blog = ({ blog, currentUser }) => {
       const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}?`)
       if (canDelete) {
         await blogService.deleteOne(blog)
+        return blog
       }
-      return blog
+      return null
     },
     onSuccess: (deletedBlog) => {
-      const blogs = queryClient.getQueryData(['blogs'])
-      queryClient.setQueryData(
-        ['blogs'],
-        blogs.filter((blog) => blog.id !== deletedBlog.id),
-      )
+      if (deletedBlog !== null) {
+        const blogs = queryClient.getQueryData(['blogs'])
+        queryClient.setQueryData(
+          ['blogs'],
+          blogs.filter((blog) => blog.id !== deletedBlog.id),
+        )
+      }
     },
     onError: (error) => notifyError(error.message),
   })
@@ -70,7 +76,7 @@ const Blog = ({ blog, currentUser }) => {
   }
   const deleteButtonStyle = {
     marginTop: '10px',
-    display: blog.user.username === currentUser.username ? '' : 'none',
+    display: blog.user.username === loginSession.username ? '' : 'none',
   }
   const descriptionStyle = {
     display: toggled ? '' : 'none',

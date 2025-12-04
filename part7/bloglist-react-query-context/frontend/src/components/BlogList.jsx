@@ -5,8 +5,7 @@ import Loading from './Loading'
 
 import blogService from '../services/blogs'
 
-const BlogList = ({ currentUser }) => {
-  // Query: blogs
+const BlogList = () => {
   const queryResult = useQuery({
     queryKey: ['blogs'],
     queryFn: blogService.getAll,
@@ -16,16 +15,20 @@ const BlogList = ({ currentUser }) => {
   const blogs = queryResult.data
 
   // Render
-  if (queryResult.isError) return <div>Blogs service not available</div>
+  if (queryResult.isError) {
+    return <div>Blogs service not available</div>
+  }
 
-  if (queryResult.isLoading) return <Loading />
+  if (queryResult.isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="bloglist">
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} currentUser={currentUser} />
+          <Blog key={blog.id} blog={blog} />
         ))}
     </div>
   )

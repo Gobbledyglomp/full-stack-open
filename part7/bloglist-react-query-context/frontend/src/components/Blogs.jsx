@@ -4,17 +4,17 @@ import Togglable from './Togglable'
 import CreateBlogs from './CreateBlogs'
 import BlogList from './BlogList'
 
-const Blogs = ({ user }) => {
+const Blogs = () => {
   return (
     <>
       <h1>Blogs</h1>
       <Notification />
-      <UserInfo name={user.name} />
+      <UserInfo />
 
       <Togglable label="Create New Blog">
         <CreateBlogs />
       </Togglable>
-      <BlogList currentUser={user} />
+      <BlogList />
     </>
   )
 }
