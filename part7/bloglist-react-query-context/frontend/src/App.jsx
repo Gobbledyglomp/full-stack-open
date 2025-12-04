@@ -34,9 +34,7 @@ const App = () => {
     setUser(user)
   }
 
-  //
   // Render
-  //
   if (user === undefined) return <Loading />
 
   if (user === null) {

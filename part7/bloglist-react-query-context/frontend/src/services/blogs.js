@@ -27,7 +27,6 @@ const deleteOne = async (blog) => {
   }
 
   const response = await axios.delete(`${baseUrl}/${blog.id}`, config)
-  return response.data
 }
 
 const like = async (blog) => {

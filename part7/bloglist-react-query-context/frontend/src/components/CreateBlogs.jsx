@@ -26,7 +26,7 @@ const CreateBlogs = () => {
     onError: (error) => notifyError(error.message),
   })
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     addBlogMutation.mutate({ title, author, url })
   }

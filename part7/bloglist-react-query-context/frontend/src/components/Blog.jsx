@@ -1,12 +1,57 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import blogService from '../services/blogs'
 import useNotify from '../hooks/useNotify'
 
-const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
+const Blog = ({ blog, currentUser }) => {
   const [toggled, setToggled] = useState(false)
 
   const { notifyError } = useNotify()
+
+  const queryClient = useQueryClient()
+
+  // Mutations
+  const likeMutation = useMutation({
+    mutationFn: blogService.like,
+    onSuccess: (updatedBlog) => {
+      const blogs = queryClient.getQueryData(['blogs'])
+      queryClient.setQueryData(
+        ['blogs'],
+        blogs.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog)),
+      )
+    },
+    onError: (error) => notifyError(error.message),
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: async (blog) => {
+      const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}?`)
+      if (canDelete) {
+        await blogService.deleteOne(blog)
+      }
+      return blog
+    },
+    onSuccess: (deletedBlog) => {
+      const blogs = queryClient.getQueryData(['blogs'])
+      queryClient.setQueryData(
+        ['blogs'],
+        blogs.filter((blog) => blog.id !== deletedBlog.id),
+      )
+    },
+    onError: (error) => notifyError(error.message),
+  })
+
+  // Handlers
+  const handleLike = (event) => {
+    event.preventDefault()
+    likeMutation.mutate(blog)
+  }
+
+  const handleDeletion = (event) => {
+    event.preventDefault()
+    deleteMutation.mutate(blog)
+  }
 
   // Styles
   const blogStyle = {
@@ -32,36 +77,6 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
     marginTop: '10px',
   }
 
-  // Functions
-  const toggle = () => {
-    setToggled(!toggled)
-  }
-
-  // Handlers
-  const handleLike = async (event) => {
-    event.preventDefault()
-
-    try {
-      const response = await blogService.like(blog)
-      updateBlog(response)
-    } catch (error) {
-      notifyError(error.response.data.error)
-    }
-  }
-  const handleDeletion = async (event) => {
-    event.preventDefault()
-
-    try {
-      const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}`)
-      if (canDelete) {
-        await blogService.deleteOne(blog)
-        deleteBlog(blog)
-      }
-    } catch (error) {
-      notifyError(error.response.data.error)
-    }
-  }
-
   // Render
   return (
     <div style={blogStyle}>
@@ -72,7 +87,9 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
         </div>
         {/* Button */}
         <div style={buttonStyle}>
-          <button onClick={toggle}>{toggled ? 'Hide' : 'View'}</button>
+          <button onClick={() => setToggled(!toggled)}>
+            {toggled ? 'Hide' : 'View'}
+          </button>
         </div>
       </div>
       {/* Description */}
