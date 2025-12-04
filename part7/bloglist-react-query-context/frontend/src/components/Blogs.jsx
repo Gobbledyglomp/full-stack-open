@@ -1,49 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 
-import Loading from './Loading'
-import CreateBlogs from './CreateBlogs'
 import Notification from './Notification'
+import UserInfo from './UserInfo'
 import Togglable from './Togglable'
+import CreateBlogs from './CreateBlogs'
 import BlogList from './BlogList'
 
 import blogService from '../services/blogs'
 
-const UserInfo = ({ name }) => {
-  // Functions
-  const logout = () => {
-    window.localStorage.removeItem('user')
-    window.location.reload()
-  }
-
-  // Render
-  if (!name) return <Loading />
-
-  return (
-    <div style={{ marginBottom: '20px' }}>
-      {name} logged in. &nbsp;
-      <button onClick={logout}>Logout</button>
-    </div>
-  )
-}
-
 const Blogs = ({ user }) => {
-  // States
-  const [blogs, setBlogs] = useState([])
+  const queryClient = useQueryClient()
 
-  // Effects
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
+  // TO DELETE
+  // Query: blogs
+  const queryResult = useQuery({
+    queryKey: ['blogs'],
+    queryFn: blogService.getAll,
+    retry: 1,
+  })
+  const blogs = queryResult.data
+  console.log(blogs)
 
-  // Functions
-  const addBlog = async (blog) => {
-    const response = await blogService.create({
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-    })
-    setBlogs(blogs.concat(response))
-  }
+  // TO DELETE
+  // Mutations
+  const addBlogLocally = useMutation({
+    mutationFn: (newBlog) => {
+      queryClient.setQueryData(['blogs'], blogs.concat(newBlog))
+    },
+  })
+  const setBlogs = (newBlog) => addBlogLocally.mutate(newBlog)
 
   // Render
   return (
@@ -53,9 +38,9 @@ const Blogs = ({ user }) => {
       <UserInfo name={user.name} />
 
       <Togglable label="Create New Blog">
-        <CreateBlogs addBlog={addBlog} />
+        <CreateBlogs />
       </Togglable>
-      <BlogList blogs={blogs} setBlogs={setBlogs} currentUser={user} />
+      <BlogList setBlogs={setBlogs} currentUser={user} />
     </>
   )
 }

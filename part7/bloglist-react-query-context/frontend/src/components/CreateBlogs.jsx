@@ -1,31 +1,36 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import useNotify from '../hooks/useNotify'
+import blogService from '../services/blogs'
 
-const CreateBlogs = ({ addBlog }) => {
+const CreateBlogs = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   const { notifyInfo, notifyError } = useNotify()
 
-  // Handler
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+  const queryClient = useQueryClient()
 
-    try {
-      await addBlog({ title, author, url })
+  const addBlogMutation = useMutation({
+    mutationFn: blogService.create,
+    onSuccess: (newBlog) => {
+      const blogs = queryClient.getQueryData(['blogs'])
+      queryClient.setQueryData(['blogs'], blogs.concat(newBlog))
       notifyInfo(`New blog "${title}" by ${author} added`)
-
       setTitle('')
       setAuthor('')
       setUrl('')
-    } catch (error) {
-      notifyError(error.response.data.error)
-    }
+    },
+    onError: (error) => notifyError(error.message),
+  })
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    addBlogMutation.mutate({ title, author, url })
   }
 
-  // Render
   return (
     <div>
       <h2>Create new</h2>

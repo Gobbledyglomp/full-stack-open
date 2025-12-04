@@ -1,15 +1,28 @@
-import Blog from './Blog'
+import { useQuery } from '@tanstack/react-query'
 
-const BlogList = ({ blogs, setBlogs, currentUser }) => {
+import Blog from './Blog'
+import Loading from './Loading'
+
+import blogService from '../services/blogs'
+
+const BlogList = ({ setBlogs, currentUser }) => {
+  // Query: blogs
+  const queryResult = useQuery({
+    queryKey: ['blogs'],
+    queryFn: blogService.getAll,
+    retry: 1,
+  })
+
+  const blogs = queryResult.data
+
+  // Functions
   const updateBlog = (updatedBlog) => {
     const updatedBlogs = blogs.map((blog) => {
       if (blog.id === updatedBlog.id) {
         return updatedBlog
       }
-
       return blog
     })
-
     setBlogs(updatedBlogs)
   }
 
@@ -19,7 +32,9 @@ const BlogList = ({ blogs, setBlogs, currentUser }) => {
   }
 
   // Render
-  if (!blogs) return <Loading />
+  if (queryResult.isError) return <div>Blogs service not available</div>
+
+  if (queryResult.isLoading) return <Loading />
 
   return (
     <div className="bloglist">
