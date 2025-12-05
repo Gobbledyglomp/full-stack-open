@@ -1,13 +1,38 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
-  // States
+import blogService from '../services/blogs'
+import useNotify from '../hooks/useNotify'
+
+const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
   const [toggled, setToggled] = useState(false)
 
-  //
+  const notify = useNotify()
+
+  // Handlers
+  const handleLike = async (event) => {
+    event.preventDefault()
+    try {
+      const response = await blogService.like(blog)
+      updateBlog(response)
+    } catch (error) {
+      notify('ERROR', error.message)
+    }
+  }
+
+  const handleDeletion = async (event) => {
+    event.preventDefault()
+    try {
+      const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}`)
+      if (canDelete) {
+        await blogService.deleteOne(blog)
+        deleteBlog(blog)
+      }
+    } catch (error) {
+      notify('ERROR', error.message)
+    }
+  }
+
   // Styles
-  //
   const blogStyle = {
     padding: '10px',
     border: '2px solid #0288d1',
@@ -16,57 +41,26 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
     marginBottom: 5,
     maxWidth: '500px',
   }
+
   const titleStyle = {
     display: 'flex',
   }
+
   const buttonStyle = {
     marginLeft: 'auto',
   }
+
   const deleteButtonStyle = {
     marginTop: '10px',
     display: blog.user.username === currentUser.username ? '' : 'none',
   }
+
   const descriptionStyle = {
     display: toggled ? '' : 'none',
     marginTop: '10px',
   }
 
-  // Functions
-  const toggle = () => {
-    setToggled(!toggled)
-  }
-
-  //
-  // Handlers
-  //
-  const handleLike = async (event) => {
-    event.preventDefault()
-
-    try {
-      const response = await blogService.like(blog)
-      updateBlog(response)
-    } catch (error) {
-      notify('error', error.response.data.error)
-    }
-  }
-
-  const handleDeletion = async (event) => {
-    event.preventDefault()
-
-    try {
-      const canDelete = confirm(`Remove blog ${blog.title} by ${blog.author}`)
-      if (canDelete) {
-        await blogService.deleteOne(blog)
-        deleteBlog(blog)
-      }
-    } catch (error) {
-      notify('error', error.response.data.error)
-    }
-  }
-
-  //
   // Render
-  //
   return (
     <div style={blogStyle}>
       {/* Title */}
@@ -76,7 +70,9 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser, notify }) => {
         </div>
         {/* Button */}
         <div style={buttonStyle}>
-          <button onClick={toggle}>{toggled ? 'Hide' : 'View'}</button>
+          <button onClick={() => setToggled(!toggled)}>
+            {toggled ? 'Hide' : 'View'}
+          </button>
         </div>
       </div>
       {/* Description */}

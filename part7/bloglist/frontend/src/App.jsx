@@ -14,7 +14,6 @@ const App = () => {
   // Effects
   useEffect(() => {
     const user = window.localStorage.getItem('user')
-
     if (user) {
       const userParsed = JSON.parse(user)
       blogService.setToken(userParsed.token)
@@ -25,19 +24,17 @@ const App = () => {
   }, [])
 
   // Functions
-  const login = async (event, username, password) => {
-    event.preventDefault()
-
+  const login = async (username, password) => {
     const user = await loginService.login({ username, password })
     blogService.setToken(user.token)
     window.localStorage.setItem('user', JSON.stringify(user))
     setUser(user)
   }
 
-  //
   // Render
-  //
-  if (user === undefined) return <Loading />
+  if (user === undefined) {
+    return <Loading />
+  }
 
   if (user === null) {
     return <Login login={login} />

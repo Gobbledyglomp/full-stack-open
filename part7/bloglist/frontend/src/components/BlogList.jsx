@@ -1,15 +1,13 @@
 import Blog from './Blog'
 
-const BlogList = ({ blogs, setBlogs, currentUser, notify }) => {
+const BlogList = ({ blogs, setBlogs, currentUser }) => {
   const updateBlog = (updatedBlog) => {
     const updatedBlogs = blogs.map((blog) => {
       if (blog.id === updatedBlog.id) {
         return updatedBlog
       }
-
       return blog
     })
-
     setBlogs(updatedBlogs)
   }
 
@@ -22,7 +20,7 @@ const BlogList = ({ blogs, setBlogs, currentUser, notify }) => {
   if (!blogs) return <Loading />
 
   return (
-    <div className="bloglist">
+    <div>
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
@@ -32,7 +30,6 @@ const BlogList = ({ blogs, setBlogs, currentUser, notify }) => {
             updateBlog={updateBlog}
             deleteBlog={deleteBlog}
             currentUser={currentUser}
-            notify={notify}
           />
         ))}
     </div>

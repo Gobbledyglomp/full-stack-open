@@ -1,32 +1,27 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 import Notification from './Notification'
+import useNotify from '../hooks/useNotify'
 
 const Login = ({ login }) => {
-  // States
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  // Refs
-  const notificationRef = useRef({ notify: null })
+  const notify = useNotify()
 
-  // Effects
   const handleLogin = async (event) => {
+    event.preventDefault()
     try {
-      await login(event, username, password)
+      await login(username, password)
     } catch (error) {
-      notificationRef.current.notify('error', error.response.data.error)
-    } finally {
-      setUsername('')
-      setPassword('')
+      notify('ERROR', error.response.data.error)
     }
   }
 
-  // Render
   return (
     <>
       <h1>Log in to application</h1>
-      <Notification ref={notificationRef} />
+      <Notification />
       <form onSubmit={handleLogin}>
         <div>
           <label>
